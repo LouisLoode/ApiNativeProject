@@ -1,0 +1,22 @@
+{
+  "name": "Doc API - ApiNativeProject",
+  "version": "0.1.0",
+  "description": "Documentation for the ApiNativeProject",
+  "title": "Doc - ApiNativeProject",
+  "url" : "http://localhost:3000",
+  "header": {
+    "title": "Install, config and run",
+    "filename": "./doc/header.md"
+  },
+  "footer": {
+    "title": "Thanks to",
+    "filename": "./doc/footer.md"
+  },
+  "order": [
+    "Messages"
+  ],
+  "template": {
+  	"withCompare": true,
+  	"withGenerator": true
+  }
+}

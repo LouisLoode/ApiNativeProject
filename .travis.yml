@@ -1,0 +1,26 @@
+language: node_js
+node_js:
+- 4.4.0
+addons:
+  apt:
+    packages:
+    - sshpass
+env:
+  global:
+  - NODE_ENV=test
+branches:
+  only:
+  - master
+sudo: true
+install:
+- npm install
+- cp ./config/config.example.js ./config/config.js 
+cache:
+  directories:
+    - node_modules
+services:
+- mongodb
+before_script:
+- sleep 10
+script:
+- npm test

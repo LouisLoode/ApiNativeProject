@@ -1,0 +1,58 @@
+{
+  "name": "ApiNativeProject",
+  "version": "0.1.0",
+  "description": "",
+  "main": "server.js",
+  "author": "Louisloode",
+  "contributors": [
+    {
+      "name": "Louis DEBRAINE",
+      "email": "louisdebraine@gmail.com"
+    }
+  ],
+  "private": false,
+  "scripts": {
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha 'test/**/*.js' --reporter spec",
+    "start": "NODE_ENV=production node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LouisLoode/api-native-project"
+  },
+  "bugs": {
+    "url": "https://github.com/LouisLoode/api-native-project/issues/"
+  },
+  "keywords": [
+    "KoApi",
+    "KoaJS",
+    "NodeJS",
+    "API"
+  ],
+  "dependencies": {
+    "forever": "~0.15.1",
+    "isuuid": "^0.1.0",
+    "koa": "~1.2.0",
+    "koa-bodyparser": "~2.0.1",
+    "koa-cors": "0.0.16",
+    "koa-error": "~2.0.0",
+    "koa-helmet": "~1.0.0",
+    "koa-ip": "~0.1.0",
+    "koa-logger": "~1.3.0",
+    "koa-mount": "~1.3.0",
+    "koa-oauth-server": "~1.0.1",
+    "koa-response-time": "~1.0.2",
+    "koa-router": "~5.4.0",
+    "lodash": "~4.12.0",
+    "mongoose": "git://github.com/LearnBoost/mongoose",
+    "winston": "~2.1.1"
+  },
+  "devDependencies": {
+    "apidoc": "~0.16.1",
+    "expect.js": "~0.3.1",
+    "faker": "~3.0.1",
+    "mocha": "~2.4.5",
+    "nodemon": "~1.9.2",
+    "should": "~8.3.1",
+    "supertest": "~1.0.1"
+  }
+}
