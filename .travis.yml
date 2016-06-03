@@ -8,19 +8,36 @@ addons:
 env:
   global:
   - NODE_ENV=test
+  - secure: IRxlLmQnrMIvBszT3mWyON7Q61h9xciQNd4EUtMuq3APDAWbtKSy+UfF+nwJOo4Yp7HOYpEL6ncsnrSlYKavq+b7JbPV8TuKEWnrW719s8eiVDT0X94N+i/lwTl95aCyDcmeGnR6sdO9/578bpT/GaI8+minsvIYWFLUrHIkSEJZNf8g/E68JgO+zc6t4nrAn/XFVEocpwR2EUjd8NGC6+keFEkQ04QSBv/02zKWaJ6V5FrY11l8i93D43LDyxECjLzUpZmHrgs5nAb00ZqyWFift7VSSdqnJGei+sv9+NM3kVD8C4NidUa7lGJRs87WVKUhD9E8W6sYyMwLkUurLVQKfskC7YcMol4cZPGBzuWsz/vQZ/ezmcqJQA5YGa89R3sbsIqJDPv+O1qc2+G3HeZWxxg4tJG72vseZP3+KafAoHxD18p9id6TokKIAfFmcg+OIQxyy3Fr/fWGPwDIt3CRBxgosR2JapIEAc7SA+MfzhB1ZTGycTMDGVabCtESxv1mHtJLSFeS2uyy6efsPs9u9r8Vrx7Ne/aKRmJHOUXVTKEmNPTfVdlQwsqAbhySUY9tw13Lwxo4tY+HVeVcMN7pMPvw1kKkZgFiqz544v35eQ+qK8g6p7RTyOI97IhzWk9Zupm/ad1755iYqFEHH0tht48BZVXO4IIxQXIx0nA=
+  - secure: xSyxEjyfz5X5KbpkUWvqjeYGY4700kB6lesFZBWd6n+RXJcwQgxzoyJjr9+iBqinBfJDBo4D2HPG1yLu0S/jllZlm8fBdNF4TtRkIqFAuEoLJGnioyoUvwHaSp7m4I8WPYXZmsqZBGiKXXW8ZTlvaZWspkprCS8YKfFB6maGu0vvkVO69U0LOzyg7CsQ6L0L7WYGbKohHQEx3aG5XwZFjV3G+CuieR1PtIyR/YfQ5AJW7OYbXw+lxB0J/9nTUHhbOw2UpEb9JyykBWKy0LfYHDdwaeQloGvLrLb3HCjQ3BiDLF5Ied3ja/e78qJTwdnrYDJKpX6t3hT32Et3l8YpsrcAgtg8X57fEFQoU7G/k5465VfV12JQIUmiDDWToHOwGp1qORYrgfbLq/e4SGaC3rJQ+O2EQd0eM6tJ7J51RIyKK5hlK6VnGWMUdEBfxMCn0ar0oegmulTb2ZpKa/1Uj5ho9agTQMyToa7iGLp5z+V4/nHZZlYTvjPjnDB3rmJa8hj8o7oB7OogOnsgeW38UulHcoQ7g/A6q054cLPWwAnjkDU2hR2NTTbhDpdKr4oH00zm/DO3O208Q7WLotScq0VQDIj3TnYFacAnRzP0deKRWSId6CHgEpEIysNqOqMjGtCVgJnA2vu2t9vDx10f81jgH5bEopV3TYBO9ScHjEI=
+  - secure: z+F8TBIJdYU5bJC/n6T0NlNeiOgfF5/4e6oFVQ8h9CuRpD40cLrX+t9UI5j9lZxEKks/d+1DMl3DqoVUeO61P6QkSV0RvTSv+Lls6F+aQKcuZNuKtpu41b3aqKnHdAiTE6b8sU++arObpDnmGuygyI0R557m/NhEzDaLfC2sWCQf6/qbD9BzNtf+Cck4prPGJTCMvl4E1er/vymf4I2bGb2K0YSIdveqAiV1h2lGJM/5wR50JO7NVTlwfJmVJLFShmVSlBhOja5xjcuzLOZbUGlkBzNCO6axBkG4GOMfNHiAaqtjZZlRp1Y7w7xWNQKIm+4JBvi6ntLoifSWiLcZOtnOwjAiC/B8P0PjJ8dDR6pAhEXjQ1OHXAHHpZSOgf9a3pBmFoMy6z+fwiffRKwlfslHTedfkznzLHDO1oWj32WWpk04qzVMlnuFyhD5OpEb49nmdKO3xGDaxEaEA12UPlrwN2olVOXi9riI7jeUmmEYFGFGMZVcjUxB3W4OvduCI00F6e/uB5mSO+tQFHZJkoM3UytdnLg0WyHE6kM5NhDjkI0gYTZMGIUDxpeIN2vwA5s3AxRdVv62ePN8Bz5bwuMQvJYtOZ1GspkmNgpP2/6ZE/kh/9VZ4aYrAvAWL7kq+CcGgh6r1QiorEwDZx4I1RVmiKzP5O4G7Psk/7dFaOE=
+  - secure: L3hRg16duQSV8FYYmVDWprmtLwuLqkB5294Rar9J54SWjQBYorVyaqYTWyQw56n1AejDXGKisS08AA6Evk3/AtXEsGOo9yNrQaJQ20X8hwSCGrkGlCMY27LLx+MGHT+oicMoiYScnMHNsvpLk8ahWzCnfOQ7VWOIVQzM19KIgB3pmR+/7txJk2WnNwj6AaezLhiQu9ll1AW7zkfIK//Ld5hvyrszQ/SIC6hU1Wnl9AJI39qkaoXwFc0tSc8LMFEChPW0mx3Acnv2N4BBLxXCJtgk2AEH4K0uQtxQpT9FGDS89eGRWA9fElDMk9l7+wAf6yVJzp60GFsQbdnAC247FAuArEyU2O4hP+O2eNk4XTsFvap9oUN1GmTfOvtVBFBnlnjWRpDZr4N4XhOKBHd1yc7bsj3fZRRz65ZbwiIOAScpHeMU6dD4cCZ7iKMF7Aicdfpe+CAI8VcfqIqIEyJ8hbei2gB7zFKcnvncMOl3P63eS8rHzFF5J0Mor5i92/B12zeRgPWs0/TQqO5PoyhoG3fdXWFiLwH9z9/tKOZE1prbKd1soYezn86tSekVtyPTMfB+M2RGW3YOZVgmYaiNwu2Qb7xkPFP0ghi+X/UOicbrociWiDB/2ukx1+txZmJ5/CbmxJerNaKVmt3o9yhGBy1N9PFRFV0gS6fq4P7GoN4=
 branches:
   only:
   - master
 sudo: true
 install:
 - npm install
-- cp ./config/config.example.js ./config/config.js 
+- cp ./config/config.example.js ./config/config.js
 cache:
   directories:
-    - node_modules
+  - node_modules
 services:
 - mongodb
 before_script:
 - sleep 10
 script:
 - npm test
+after_success:
+- test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && cd ../
+- test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && cp -r
+  /home/travis/build/LouisLoode/api-native-project /home/travis/build/LouisLoode/app
+- test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && tar -czf
+  package.tgz app --exclude="README.md" --exclude="doc"
+- test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && export
+  SSHPASS=$DEPLOY_PASS
+- test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && DEPLOY_DEST=$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
+- test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && sshpass
+  -p $DEPLOY_PASS scp -o StrictHostKeyChecking=no package.tgz $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
+- test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && sshpass
+  -p $DEPLOY_PASS ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST $DEPLOY_PATH/deploy.sh
