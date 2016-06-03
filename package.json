@@ -13,8 +13,8 @@
   "private": false,
   "scripts": {
     "test": "NODE_ENV=test ./node_modules/.bin/mocha 'test/**/*.js' --reporter spec",
-    "start": "NODE_ENV=production pm2 start ./config/processes.yml",
-    "stop": "pm2 stop ./config/processes.yml"
+    "start": "NODE_ENV=production forever start ./config/processus.json",
+    "stop": "forever stop ./config/processus.json"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
     "API"
   ],
   "dependencies": {
+    "forever": "^0.15.2",
     "isuuid": "^0.1.0",
     "koa": "~1.2.0",
     "koa-bodyparser": "~2.0.1",
@@ -44,7 +45,6 @@
     "koa-router": "~5.4.0",
     "lodash": "~4.12.0",
     "mongoose": "git://github.com/LearnBoost/mongoose",
-    "pm2": "^1.1.3",
     "winston": "~2.1.1"
   },
   "devDependencies": {
