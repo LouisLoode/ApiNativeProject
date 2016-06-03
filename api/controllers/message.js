@@ -174,6 +174,7 @@ ctrl.post = function *(next){
       this.status = 200;
       this.body = result;
     } catch (error) {
+      console.log(error);
       this.status = 400;
       return this.body = error.name;
     }  

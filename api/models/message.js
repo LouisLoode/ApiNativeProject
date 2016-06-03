@@ -6,7 +6,6 @@ var MessageSchema = new Schema({
   name: {
         type: String,
         required: true,
-        //unique: true
     },
   content: {
         type: String,
