@@ -1,0 +1,8 @@
+{
+    // Comments are supported
+    "uid": "api",
+    "append": true,
+    "watch": false,
+    "script": "server.js",
+    "sourceDir": "/var/www/native-project/app"
+}

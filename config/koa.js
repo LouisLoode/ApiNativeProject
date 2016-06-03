@@ -14,7 +14,7 @@ module.exports = function(app, config) {
   if (!config.app.keys) { throw new Error('Please add session secret key in the config file!'); }
   app.keys = config.app.keys;
 
-  if (config.app.env !== 'test') {
+  if (config.app.env !== 'test' && config.app.env !== 'production') {
     app.use(logger());
   }
 
@@ -37,10 +37,7 @@ module.exports = function(app, config) {
     var appReqUUI = this.request.get('X-app-UUID');
     var appCheckUUI = isuuid(appReqUUI); // Is a valid UUID
     var appReqContentType = this.request.get('Content-Type');
-
     //console.log(appReqUUI);
-    //console.log(appReqContentType);
-
     if (appCheckUUI == true && appReqContentType == 'application/json'){
       yield next;
     } else{
