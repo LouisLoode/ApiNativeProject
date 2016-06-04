@@ -13,10 +13,10 @@ var helmet = require('koa-helmet');
 var ip = require('koa-ip');
 var genres = require('../api/utils/responses');
 
-module.exports = function(app, router, config) {
+module.exports = function(app, config) {
   //if (!config.app.keys) { throw new Error('Please add session secret key in the config file!'); }
   //app.keys = config.app.keys;
-
+  //console.log(config);
   if (config.app.env === 'development') {
     app.use(logger());
   }
@@ -55,6 +55,7 @@ module.exports = function(app, router, config) {
   });
 
   app.use(responseTime());
+
 
 
 };
