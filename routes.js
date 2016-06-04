@@ -2,6 +2,7 @@
 
 var Router = require('koa-router');
 var mount = require('koa-mount');
+var serve   = require('koa-static');
 
 // Controllers
 var messageController = require('./api/controllers/message');
@@ -10,8 +11,15 @@ var messageController = require('./api/controllers/message');
 
 
 module.exports = function(app) {
+
   // register functions
-  var router = new Router();
+  var router = new Router({
+    prefix: '/api'
+  });
+
+
+  // serve files in public folder (css, js etc)
+  app.use(mount('/assets', serve(__dirname + '/public')));
 
   router.use(function *(next) {
     this.type = 'json';
@@ -23,27 +31,20 @@ module.exports = function(app) {
     this.status = 200;
   });
 
-  /*router.get('/auth', authController.getCurrentUser);
-  router.post('/auth', authController.signIn);
-
-  router.all('/signout', authController.signOut);
-  router.post('/signup', authController.createUser);
-
-  // secured routes
-  router.get('/value', secured, countController.getCount);
-  router.get('/inc', secured, countController.increment);
-  router.get('/dec', secured, countController.decrement);*/
-  // Register `/token` POST path on oauth router (i.e. `/oauth2/token`).
-
-
   // Crud Routes
   //router.get('/messages', app.oauth.authorise(), messageController.list);
   router.get('/messages', messageController.list);
-  router.get('/message/:id', messageController.get);
+  /*router.get('/message/:id', messageController.get);
   router.post('/message', messageController.post);
   router.put('/message/:id', messageController.put);
-  router.del('/message/:id', messageController.del);
+  router.del('/message/:id', messageController.del);*/
+  //console.log(router.routes());
+  //app.use('/api', router.routes());
+  //app.use('/static', serve());
 
-  app.use(router.routes());
+
+  app.use(router.middleware());
   app.use(router.allowedMethods());
+
+
 };

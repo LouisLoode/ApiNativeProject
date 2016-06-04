@@ -3,19 +3,22 @@ var Schema = mongoose.Schema;
 
 // set up a mongoose model
 var MessageSchema = new Schema({
-  name: {
+  id_themoviedb: {
         type: String,
         required: true,
     },
-  content: {
+  picto: {
         type: String,
         required: true
     },
-  created: {
+    created: {
         type: Date,
         default: Date.now
     },
-  validated:  Boolean
+    updated: {
+        type: [Date],
+        default: Date.now
+    }
 });
 
 mongoose.model('Message', MessageSchema);
