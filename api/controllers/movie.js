@@ -1,5 +1,8 @@
 'use strict';
 
+var request = require('koa-request');
+var config = require('../../config/config');
+
 var messages = require('../models/movie');
 var mongoose = require('mongoose');
 var Movie = mongoose.model('Movie');
@@ -8,6 +11,15 @@ var ctrl = module.exports = {};
 
 var outputFieldsSecurity = 'slug id_themoviedb picto created updated';
 
+function extend(target) {
+    var sources = [].slice.call(arguments, 1);
+    sources.forEach(function (source) {
+        for (var prop in source) {
+            target[prop] = source[prop];
+        }
+    });
+    return target;
+}
 
 /**
  * @api {get} /movies/ Get all the movies
@@ -89,7 +101,8 @@ ctrl.list = function *(next){
  *          "picto": "hamlet.png",
  *          "_id": "572f7196e002358e0e7e5c91",
  *          "created": "2016-05-08T17:04:22.923Z",
- *          "updated": "2016-05-08T17:04:22.923Z"
+ *          "updated": "2016-05-08T17:04:22.923Z",
+ *          "tmb": { ... }
  *        }
  *      }
  *
@@ -112,19 +125,36 @@ ctrl.get = function *(next, params) {
   try {
     //console.log(this.params.id);
     result = yield Movie.findOne({ '_id': this.params.id}, outputFieldsSecurity).exec();
+    
     //console.log(result);
     if (result == null) {
       this.status = 404;
     } else {
 
-      
+      var final = result;
 
+          var options = { method: 'GET',
+            url: 'https://api.themoviedb.org/3/movie/' + result.id_themoviedb,
+            qs: { api_key: config.themoviedb.api_key, language: config.themoviedb.language },
+            headers: 
+             {'content-type': 'application/json'} };
+         
+          var response = yield request(options); //Yay, HTTP requests with no callbacks! 
+          var info = JSON.parse(response.body);
 
+          var final = {
+            _id: result._id,
+            slug: result.slug,
+            picto: config.app.url + '/' + result.picto,
+            updated: result.updated,
+            created: result.created,
+            tmb: info
+          };
 
-
+      //console.log(final);
       
       this.status = 200;
-      return this.body = result;
+      return this.body = final;
     }
   } catch (error) {
     this.status = 404;

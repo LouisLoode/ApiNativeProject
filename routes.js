@@ -10,7 +10,7 @@ var movieController = require('./api/controllers/movie');
 
 
 
-module.exports = function(app) {
+module.exports = function(app, config) {
 
   // register functions
   var router = new Router({
