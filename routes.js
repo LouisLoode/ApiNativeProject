@@ -8,9 +8,6 @@ var serve   = require('koa-static');
 var movieController = require('./api/controllers/movie');
 var userController = require('./api/controllers/user');
 
-
-
-
 module.exports = function(app, config) {
 
   // register functions
