@@ -16,7 +16,7 @@ var genres = require('../api/utils/responses');
 module.exports = function(app, config) {
   //if (!config.app.keys) { throw new Error('Please add session secret key in the config file!'); }
   //app.keys = config.app.keys;
-  //console.log(config);
+
   if (config.app.env === 'development') {
     app.use(logger());
   }
@@ -55,7 +55,6 @@ module.exports = function(app, config) {
   });
 
   app.use(responseTime());
-
 
 
 };

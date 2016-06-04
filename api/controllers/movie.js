@@ -1,5 +1,6 @@
 'use strict';
 
+var request = require('koa-request');
 var config = require('../../config/config');
 
 var messages = require('../models/movie');
@@ -130,24 +131,26 @@ ctrl.get = function *(next, params) {
       this.status = 404;
     } else {
 
-      var options = { method: 'GET',
-        url: 'https://api.themoviedb.org/3/movie/' + result.id_themoviedb,
-        qs: { api_key: config.themoviedb.api_key, language: config.themoviedb.language },
-        headers: 
-         {'content-type': 'application/json'} };
-     
-      var response = yield request(options); //Yay, HTTP requests with no callbacks! 
-      var info = JSON.parse(response.body);
+      var final = result;
 
-      var final = {
-        _id: result._id,
-        slug: result.slug,
-        picto: config.app.url + '/' + result.picto,
-        updated: result.updated,
-        created: result.created,
-        tmb: info
-      };
-      
+          var options = { method: 'GET',
+            url: 'https://api.themoviedb.org/3/movie/' + result.id_themoviedb,
+            qs: { api_key: config.themoviedb.api_key, language: config.themoviedb.language },
+            headers: 
+             {'content-type': 'application/json'} };
+         
+          var response = yield request(options); //Yay, HTTP requests with no callbacks! 
+          var info = JSON.parse(response.body);
+
+          var final = {
+            _id: result._id,
+            slug: result.slug,
+            picto: config.app.url + '/' + result.picto,
+            updated: result.updated,
+            created: result.created,
+            tmb: info
+          };
+
       //console.log(final);
       
       this.status = 200;

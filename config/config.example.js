@@ -27,10 +27,14 @@ var specific = {
       port: 27017,
       database: 'api-native-project'
     },
+    themoviedb: {
+      api_key: 'c1ac741d5dd740f9861e794c5363b0c2',
+      language: 'en'
+    }
   },
   test: {
     app: {
-      url: 'http://localhost:3000',
+      url: 'http://localhost:3001',
       port: 3001,
       name: 'ApiNativeProject - Test ',
       keys: [ 'super-secret' ],
@@ -40,22 +44,31 @@ var specific = {
       pass: '',
       host: '127.0.0.1',
       port: 27017,
-      database: 'api-native-project'
+      database: 'api-native-project-test'
     },
+    themoviedb: {
+      api_key: 'c1ac741d5dd740f9861e794c5363b0c2',
+      language: 'en'
+    }
   },
   production: {
     app: {
       url: 'http://localhost:3000',
       port: process.env.PORT || 3000,
       name: 'ApiNativeProject',
+      keys: [ 'super-secret' ],
     },
     mongo: {
       user: '',
       pass: '',
       host: '127.0.0.1',
       port: 27017,
-      database: 'api-native-project'
+      database: 'api-native-project-test'
     },
+    themoviedb: {
+      api_key: 'c1ac741d5dd740f9861e794c5363b0c2',
+      language: 'en'
+    }
   },
 };
 
