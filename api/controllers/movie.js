@@ -131,7 +131,7 @@ ctrl.get = function *(next, params) {
       this.status = 404;
     } else {
 
-      var final = result;
+      //var final = result;
 
           var options = { method: 'GET',
             url: 'https://api.themoviedb.org/3/movie/' + result.id_themoviedb,

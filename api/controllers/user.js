@@ -1,18 +1,20 @@
 'use strict';
 
-var messages = require('../models/movie');
+var isuuid = require('isuuid');
+var config = require('../../config/config');
+
+var users = require('../models/user');
 var mongoose = require('mongoose');
-var Movie = mongoose.model('Movie');
+var User = mongoose.model('User');
 
 var ctrl = module.exports = {};
 
-var outputFieldsSecurity = 'slug id_themoviedb picto created updated';
-
+var outputFieldsSecurity = 'uuid scores created updated';
 
 /**
- * @api {get} /movies/ Get all the movies
- * @apiName ShowAllMovies
- * @apiGroup Movies
+ * @api {get} /users/ Get all the users
+ * @apiName ShowAllUsers
+ * @apiGroup Users
  * @apiVersion 0.1.0
  *
  * @apiSuccessExample {json} Success-Response:
@@ -24,14 +26,13 @@ var outputFieldsSecurity = 'slug id_themoviedb picto created updated';
  *          "version": "1.0.0",
  *          "now": "2016-05-08T17:04:22.926Z"
  *        },
- *        "data": {
- *          "id_themoviedb": "23383",
- *          "slug": "hamlet",
- *          "picto": "hamlet.png",
+ *        "data": [{
+ *          "score": { ... },
+ *          "uuid": "",
  *          "_id": "572f7196e002358e0e7e5c91",
  *          "created": "2016-05-08T17:04:22.923Z",
  *          "updated": "2016-05-08T17:04:22.923Z"
- *        }
+ *        }]
  *      }
  *
  * @apiParamExample {json} Request-Example:
@@ -51,7 +52,7 @@ ctrl.list = function *(next){
     if (query.q) {
       conditions = JSON.parse(query.q);
     }
-    var builder = Movie.find(conditions, outputFieldsSecurity);
+    var builder = User.find(conditions, outputFieldsSecurity);
     ['limit', 'skip', 'sort'].forEach(function(key){
       if (query[key]) {
         builder[key](query[key]);
@@ -67,12 +68,12 @@ ctrl.list = function *(next){
 
 
 /**
- * @api {get} /message/:id Get one movie
- * @apiName ShowOneMovie
- * @apiGroup Movies
+ * @api {get} /user/:id Get one user
+ * @apiName ShowOneUser
+ * @apiGroup Users
  * @apiVersion 0.1.0
  *
- * @apiParam {String} id  Id of the movie.
+ * @apiParam {String} id  Id of the user or the uuid.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -83,14 +84,13 @@ ctrl.list = function *(next){
  *          "version": "0.0.1",
  *          "now": "2016-05-08T17:04:22.926Z"
  *        },
- *        "data": {
- *          "id_themoviedb": "23383",
- *          "slug": "hamlet",
- *          "picto": "hamlet.png",
+ *        "data": [{
+ *          "score": { ... },
+ *          "uuid": "",
  *          "_id": "572f7196e002358e0e7e5c91",
  *          "created": "2016-05-08T17:04:22.923Z",
  *          "updated": "2016-05-08T17:04:22.923Z"
- *        }
+ *        }]
  *      }
  *
  * @apiErrorExample {json} Error-Response
@@ -110,12 +110,22 @@ ctrl.get = function *(next, params) {
   yield next;
   var error, result;
   try {
+    var isUUID = isuuid(this.params.id); // true
+    if(isUUID){
+      var req = { 'uuid': this.params.id};
+    } else {
+      var req = { '_id': this.params.id};
+    }
+
     //console.log(this.params.id);
-    result = yield Movie.findOne({ '_id': this.params.id}, outputFieldsSecurity).exec();
+    result = yield User.findOne(req, outputFieldsSecurity).exec();
+    
     //console.log(result);
     if (result == null) {
       this.status = 404;
     } else {
+      //console.log(final);
+      
       this.status = 200;
       return this.body = result;
     }
@@ -127,14 +137,12 @@ ctrl.get = function *(next, params) {
 
 
  /**
- * @api {post} /movie Post a movie
- * @apiName AddMmovie
- * @apiGroup Movies
+ * @api {post} /user Post an user
+ * @apiName AddUser
+ * @apiGroup Users
  * @apiVersion 0.1.0
  *
- * @apiParam {Number} id_themoviedb  id of the movie in the API of themoviedb.
- * @apiParam {String} slug  slug of the movie.
- * @apiParam {String} picto  pictogram name's of the movie.
+ * @apiParam {String} uuid  id of the movie in the API of themoviedb.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -146,9 +154,7 @@ ctrl.get = function *(next, params) {
  *          "now": "2016-05-10T12:28:43.502Z"
  *        },
  *        "data": {
- *          "id_themoviedb": "23383",
- *          "slug": "hamlet",
- *          "picto": "hamlet.png",
+ *          "uuid": "",
  *          "_id": "5731d3fb8d476abe2445b03d",
  *          "created": "2016-05-10T12:28:43.482Z"
  *        }
@@ -157,27 +163,18 @@ ctrl.get = function *(next, params) {
 ctrl.post = function *(next){
   yield next;
   var error, result;
-  console.log(this.request.body);
+  //console.log(this.request.body);
   if (!this.request.body) {
     this.status = 400;
     return this.body = 'The body is empty';
   }
-  if (!this.request.body.slug) {
+  if (!this.request.body.uuid) {
     this.status = 400;
-    return this.body = 'Missing slug';
+    return this.body = 'Missing uuid';
   }
-  if (!this.request.body.picto) {
-    this.status = 400;
-    return this.body = 'Missing pictogram';
-  }
-  if (!this.request.body.id_themoviedb) {
-    this.status = 400;
-    return this.body = 'Missing the ID of the movie for themoviedb API';
-  }else{
+  else{
     try {
-      var result = new Movie({ id_themoviedb: this.request.body.id_themoviedb, 
-                                 slug: this.request.body.slug,
-                                 picto: this.request.body.picto 
+      var result = new User({ uuid: this.request.body.uuid
                                });
       result = yield result.save();
       this.status = 200;
@@ -191,67 +188,15 @@ ctrl.post = function *(next){
 };
 
 
- /**
- * @api {put} /movie/:id Update a movie
- * @apiName UpdateMovie
- * @apiGroup Movies
- * @apiVersion 0.1.0
- *
- * @apiParam {String} id  Id of the movies.
- *
- * @apiParam {Number} id_themoviedb  id of the movie in the API of themoviedb.
- * @apiParam {String} slug  slug of the movie.
- * @apiParam {String} picto  pictogram name's of the movie.
- *
- * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
- *      {
- *        "meta": {
- *          "ok": true,
- *          "code": 200,
- *          "version": "0.0.1",
- *          "now": "2016-05-10T12:28:43.502Z"
- *        },
- *        "data": {
- *          "id_themoviedb": "23383",
- *          "slug": "hamlet",
- *          "picto": "hamlet.png",
- *          "_id": "5731d3fb8d476abe2445b03d",
- *          "created": "2016-05-10T12:28:43.482Z"
- *        }
- *      }
- */
-ctrl.put = function *(next, params, request){
-  yield next;
-  var error, result;
-  try {
-    console.log(this.request.body);
-    var request = { id_themoviedb: this.request.body.id_themoviedb, 
-                   slug: this.request.body.slug,
-                   picto: this.request.body.picto,
-                   updated: new Date
-                  };
-    result = yield Movie.findByIdAndUpdate(this.params.id, request, {new: true}).exec();
-    //console.log(result);
-    if (result == null) {
-      this.status = 404;
-    } else {
-      this.status = 200;
-      return this.body = result;
-    }
-  } catch (error) {
-      this.status = 400;
-      return this.body = error.name;
-  }
-};
+
 
 /**
- * @api {del} /movie/:id Delete a movie
- * @apiName DeleteOneMovie
- * @apiGroup Movies
+ * @api {del} /user/:id Delete an user
+ * @apiName DeleteUser
+ * @apiGroup Users
  * @apiVersion 0.1.0
  *
- * @apiParam {String} id  Id of the movie.
+ * @apiParam {String} id  Id of the user.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -273,7 +218,16 @@ ctrl.del = function *(next, params){
   yield next;
   var error, result;
   try {
-    result = yield Movie.remove({ _id: this.params.id }).exec();
+
+    var isUUID = isuuid(this.params.id); // true
+    if(isUUID){
+      var req = { uuid: this.params.id};
+    } else {
+      var req = { _id: this.params.id};
+    }
+
+    result = yield User.remove(req).exec();
+    this.status = 200;
     return this.body = result;
   } catch (error) {
     this.status = 400;

@@ -2,18 +2,16 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 // set up a mongoose model
-var MovieSchema = new Schema({
-  id_themoviedb: {
-        type: Number,
+var UserSchema = new Schema({
+  uuid: {
+        type: String,
         required: true,
+        unique: true
     },
-  slug: {
-        type: String,
-        required: true,
-  },
-  picto: {
-        type: String,
-        required: true
+  score: { 
+        id_movie: { type: Schema.Types.ObjectId, ref: 'Movie' }, 
+        score: Number, 
+        date: Date 
     },
   created: {
         type: Date,
@@ -25,4 +23,4 @@ var MovieSchema = new Schema({
     },
 });
 
-mongoose.model('Movie', MovieSchema);
+mongoose.model('User', UserSchema);
