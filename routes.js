@@ -6,6 +6,7 @@ var serve   = require('koa-static');
 
 // Controllers
 var movieController = require('./api/controllers/movie');
+var userController = require('./api/controllers/user');
 
 
 
@@ -17,19 +18,12 @@ module.exports = function(app, config) {
     prefix: '/api'
   });
 
-
   // serve files in public folder (css, js etc)
   app.use(mount('/assets', serve(__dirname + '/public')));
 
   router.use(function *(next) {
     this.type = 'json';
     yield next;
-  });
-
-  //Home
-  router.get('/', function *(next) {
-    this.status = 200;
-    //this.body = {msg: 'Hello world !'};
   });
 
   // Crud Routes
@@ -41,17 +35,14 @@ module.exports = function(app, config) {
   router.put('/movie/:id', movieController.put);
   router.del('/movie/:id', movieController.del);
 
-
-
-  //router.get('/messages', app.oauth.authorise(), messageController.list);
-  //router.get('/messages', messageController.list);
-  /*router.get('/message/:id', messageController.get);
-  router.post('/message', messageController.post);
-  router.put('/message/:id', messageController.put);
-  router.del('/message/:id', messageController.del);*/
-  //console.log(router.routes());
-  //app.use('/api', router.routes());
-  //app.use('/static', serve());
+  // Users
+  router.get('/users', userController.list);
+  router.get('/user/:id', userController.get);
+  router.post('/user', userController.post);
+  router.del('/user/:id', userController.del);
+  //router.get('/user/:id/stats', movieController.getStats);
+  //router.post('/user', userController.post);
+  //router.put('/movie/:id', userController.put); // Rajouter un score à l'user
 
 
   app.use(router.middleware());
