@@ -5,7 +5,7 @@ var mount = require('koa-mount');
 var serve   = require('koa-static');
 
 // Controllers
-var messageController = require('./api/controllers/message');
+var movieController = require('./api/controllers/movie');
 
 
 
@@ -29,11 +29,22 @@ module.exports = function(app) {
   //Home
   router.get('/', function *(next) {
     this.status = 200;
+    //this.body = {msg: 'Hello world !'};
   });
 
   // Crud Routes
+  // Movies
+  //router.get('/movies', app.oauth.authorise(), messageController.list);
+  router.get('/movies', movieController.list);
+  router.get('/movie/:id', movieController.get);
+  router.post('/movie', movieController.post);
+  router.put('/movie/:id', movieController.put);
+  router.del('/movie/:id', movieController.del);
+
+
+
   //router.get('/messages', app.oauth.authorise(), messageController.list);
-  router.get('/messages', messageController.list);
+  //router.get('/messages', messageController.list);
   /*router.get('/message/:id', messageController.get);
   router.post('/message', messageController.post);
   router.put('/message/:id', messageController.put);

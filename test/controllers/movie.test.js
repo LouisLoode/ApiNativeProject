@@ -9,8 +9,9 @@ faker.locale = 'fr';
 var config = require('../../config/config');
 
 var randomUUID = faker.random.uuid();
-var randomName = faker.commerce.productName();
-var randomContent = faker.lorem.paragraph();
+var randomId = faker.random.number();
+var randomSlug = faker.name.lastName();
+var randomImg = faker.image.image();
 
 
 function request() {
@@ -18,22 +19,22 @@ function request() {
 }
 
 // This agent refers to PORT where program is runninng.
-
 var server = supertest.agent(config.app.url);
 
 // UNIT test begin
 
-describe('CRUD Message',function(){
+describe('CRUD Movie',function(){
   var id
 
-  it('post a message',function(done){
+  it('post a movie',function(done){
     // calling home page api
     server
     request()
-    .post('/message')
+    .post('/api/movie')
     .send({ 
-      name: randomName, 
-      content: randomContent 
+      id_themoviedb: randomId, 
+      slug: randomSlug,
+      picto: randomImg
     })
     .set('X-app-UUID', randomUUID)
     .set('Content-Type', 'application/json')
@@ -41,7 +42,7 @@ describe('CRUD Message',function(){
         //console.log(res.body)
         expect(res.body).to.not.be.empty();
         expect(typeof res.body).to.eql('object')
-        expect(res.body.data).to.have.key('_id')
+        expect(res.body.data).to.have.key('slug')
         expect(res.body.meta.code).to.eql(200)  
         id = res.body.data._id
         //console.log(id);
@@ -50,10 +51,10 @@ describe('CRUD Message',function(){
   });
 
 
-  it('get a message - 200',function(done){
+  it('get a movie - 200',function(done){
     server
     request()
-    .get('/message/' + id)
+    .get('/api/movie/' + id)
     .set('X-app-UUID', randomUUID)
     .set('Content-Type', 'application/json')
     .end(function(err,res){
@@ -67,10 +68,10 @@ describe('CRUD Message',function(){
     });
   });
 
-  it('get a message - 404',function(done){
+  it('get a movie - 404',function(done){
     server
     request()
-    .get('/message/qsd' + id)
+    .get('/api/movie/qsd' + id)
     .set('X-app-UUID', randomUUID)
     .set('Content-Type', 'application/json')
     .end(function(err,res){
@@ -82,10 +83,10 @@ describe('CRUD Message',function(){
     });
   });
 
-  it('get a collection of message',function(done){
+  it('get a collection of movies',function(done){
     server
     request()
-    .get('/messages')
+    .get('/api/movies')
     .set('X-app-UUID', randomUUID)
     .set('Content-Type', 'application/json')
     .end(function(err,res){
@@ -99,13 +100,14 @@ describe('CRUD Message',function(){
     });
   });
   
-  it('update a message', function(done){
+  it('update a movie', function(done){
     server
     request()
-    .put('/message/' + id)
+    .put('/api/movie/' + id)
     .send({ 
-      name: randomName + 'update', 
-      content: randomContent + 'update' 
+      id_themoviedb: randomId, 
+      slug: randomSlug + '-updated',
+      picto: randomImg
     })
     .set('X-app-UUID', randomUUID)
     .set('Content-Type', 'application/json')
@@ -118,10 +120,10 @@ describe('CRUD Message',function(){
         done();
     });
   })
-  it('checks an updated object', function(done){
+  it('checks an updated movie', function(done){
       server
       request()
-      .get('/message/' + id)
+      .get('/api/movie/' + id)
       .set('X-app-UUID', randomUUID)
       .set('Content-Type', 'application/json')
       .end(function(err, res){
@@ -129,16 +131,15 @@ describe('CRUD Message',function(){
         expect(err).to.eql(null)
         expect(typeof res.body).to.eql('object')   
         expect(res.body.data._id).to.eql(id)        
-        expect(res.body.data.name).to.eql(randomName + 'update')
-        expect(res.body.data.content).to.eql(randomContent + 'update')
+        expect(res.body.data.slug).to.eql(randomSlug + '-updated')
         done()
       })
   })
   
-  it('removes an object', function(done){
+  it('removes a movie', function(done){
       server
       request()
-      .del('/message/' + id)
+      .del('/api/movie/' + id)
       .set('X-app-UUID', randomUUID)
       .set('Content-Type', 'application/json')
       .end(function(err, res){

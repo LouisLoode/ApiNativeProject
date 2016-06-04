@@ -26,22 +26,14 @@ module.exports = function(app, router, config) {
      blackList: config.blacklist
   }));
 
-  //app.use(helmet());
+  app.use(helmet());
 
   app.use(cors());
 
-  /*app.use(function *(){
-    
-    this.set('Content-Type', 'image/jpeg');
-    yield send(this, this.path, { root: __dirname + '/public'});
-  })*/
-
   app.use(genres());
 
-  //app.use(bodyParser());
-
+  app.use(bodyParser());
   
-
   // Check if user use a valid UUID for API
   app.use(function *(next){
     var appReqPath = path.dirname(this.request.url);

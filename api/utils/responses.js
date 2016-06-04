@@ -15,9 +15,7 @@ module.exports = function (options) {
     if (this.status == 200) {
         var status = this.status;
         var data = this.body;
-        if(data.readable === true){
-          this.body = data;
-        } else {
+        if(data.readable !== true){
           if (this.method.toLowerCase !== 'option') {
             if (data == null){
               this.body = {
@@ -41,6 +39,10 @@ module.exports = function (options) {
             }
             this.status = status;
           }
+
+
+        } else {
+          this.body = data;
         }
     }
     else if (this.status == 404) {
