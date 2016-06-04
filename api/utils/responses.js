@@ -15,28 +15,34 @@ module.exports = function (options) {
     if (this.status == 200) {
         var status = this.status;
         var data = this.body;
-        if (this.method.toLowerCase !== 'option') {
-          if (data == null){
-            this.body = {
-              meta: {
-                ok: true,
-                code: this.status,
-                version: options.version || version || '1.0.0',
-                now: new Date()
-              }
-            };
-          } else {
-            this.body = {
-              meta: {
-                ok: true,
-                code: this.status,
-                version: options.version || version || '1.0.0',
-                now: new Date()
-              },
-              data: data
-            };
+        if(data.readable !== true){
+          if (this.method.toLowerCase !== 'option') {
+            if (data == null){
+              this.body = {
+                meta: {
+                  ok: true,
+                  code: this.status,
+                  version: options.version || version || '1.0.0',
+                  now: new Date()
+                }
+              };
+            } else {
+              this.body = {
+                meta: {
+                  ok: true,
+                  code: this.status,
+                  version: options.version || version || '1.0.0',
+                  now: new Date()
+                },
+                data: data
+              };
+            }
+            this.status = status;
           }
-          this.status = status;
+
+
+        } else {
+          this.body = data;
         }
     }
     else if (this.status == 404) {

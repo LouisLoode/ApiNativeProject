@@ -2,12 +2,16 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 // set up a mongoose model
-var MessageSchema = new Schema({
-  name: {
-        type: String,
+var MovieSchema = new Schema({
+  id_themoviedb: {
+        type: Number,
         required: true,
     },
-  content: {
+  slug: {
+        type: String,
+        required: true,
+  },
+  picto: {
         type: String,
         required: true
     },
@@ -15,7 +19,10 @@ var MessageSchema = new Schema({
         type: Date,
         default: Date.now
     },
-  validated:  Boolean
+  updated: {
+        type: Date,
+        default: null
+    },
 });
 
-mongoose.model('Message', MessageSchema);
+mongoose.model('Movie', MovieSchema);

@@ -24,29 +24,10 @@ var server = supertest.agent(config.app.url);
 
 describe('General unit test',function(){
 
-  // #1 should return home page
-
-  it('should return code 200',function(done){
-    //console.log(config.app.port);
-    // calling home page api
-    server
-    request()
-    .get('/')
-    .set('X-app-UUID', randomUUID)
-    .set('Content-Type', 'application/json')
-    .expect('Content-type',/json/)
-    .expect(200) // THis is HTTP response
-    .end(function(err,res){
-      // HTTP status should be 200
-      res.status.should.equal(200);
-      done();
-    });
-  });
-
    it("should return 404",function(done){
     server
     request()
-    .get("/random")
+    .get("/api/random")
     .set('X-app-UUID', randomUUID)
     .set('Content-Type', 'application/json')
     .expect(404)
@@ -55,4 +36,11 @@ describe('General unit test',function(){
       done();
     });
   });
+
+
+
+
+
+
+   
 });

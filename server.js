@@ -6,7 +6,7 @@
  */
 const koa = require('koa');
 const mongoose = require('mongoose');
-
+const router = require('koa-router')();
 var app = module.exports = koa();
 
 
@@ -28,7 +28,7 @@ mongoose.connection.on('error', function(err) {
 });
 
 // Koa configuration
-require('./config/koa')(app, config);
+require('./config/koa')(app, router, config);
 
 
 /*
@@ -36,7 +36,7 @@ require('./config/koa')(app, config);
 * ROUTER
 *
 */
-require('./routes')(app);
+require('./routes')(app, router);
 
 // Start app
 if (!module.parent) {
