@@ -7,6 +7,7 @@ var serve   = require('koa-static');
 // Controllers
 var movieController = require('./api/controllers/movie');
 var userController = require('./api/controllers/user');
+var scoreController = require('./api/controllers/score');
 
 module.exports = function(app, config) {
 
@@ -36,7 +37,14 @@ module.exports = function(app, config) {
   router.get('/users', userController.list);
   router.get('/user/:id', userController.get);
   router.post('/user', userController.post);
+  router.put('/user/:id', userController.put);
   router.del('/user/:id', userController.del);
+
+  // Scores
+  router.get('/scores', scoreController.list);
+  router.get('/score/:id', scoreController.get);
+  router.post('/score', scoreController.post);
+  router.del('/score/:id', scoreController.del);
   //router.get('/user/:id/stats', movieController.getStats);
   //router.post('/user', userController.post);
   //router.put('/movie/:id', userController.put); // Rajouter un score à l'user

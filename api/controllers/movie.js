@@ -3,7 +3,7 @@
 var request = require('koa-request');
 var config = require('../../config/config');
 
-var messages = require('../models/movie');
+var messages = require('../models/models');
 var mongoose = require('mongoose');
 var Movie = mongoose.model('Movie');
 
@@ -11,18 +11,16 @@ var ctrl = module.exports = {};
 
 var outputFieldsSecurity = 'slug id_themoviedb picto created updated';
 
-function extend(target) {
-    var sources = [].slice.call(arguments, 1);
-    sources.forEach(function (source) {
-        for (var prop in source) {
-            target[prop] = source[prop];
-        }
-    });
-    return target;
-}
+/**
+ * @api {get} /assets/pictos/:name Route to a pictogram
+ * @apiName Url to pricto
+ * @apiGroup Pictograms
+ * @apiVersion 0.1.0
+ *
+ */
 
 /**
- * @api {get} /movies/ Get all the movies
+ * @api {get} /api/movies/ Get all the movies
  * @apiName ShowAllMovies
  * @apiGroup Movies
  * @apiVersion 0.1.0
@@ -79,7 +77,7 @@ ctrl.list = function *(next){
 
 
 /**
- * @api {get} /message/:id Get one movie
+ * @api {get} /api/movie/:id Get one movie
  * @apiName ShowOneMovie
  * @apiGroup Movies
  * @apiVersion 0.1.0
@@ -164,8 +162,8 @@ ctrl.get = function *(next, params) {
 
 
  /**
- * @api {post} /movie Post a movie
- * @apiName AddMmovie
+ * @api {post} /api/movie Post a movie
+ * @apiName AddMovie
  * @apiGroup Movies
  * @apiVersion 0.1.0
  *
@@ -229,7 +227,7 @@ ctrl.post = function *(next){
 
 
  /**
- * @api {put} /movie/:id Update a movie
+ * @api {put} /api/movie/:id Update a movie
  * @apiName UpdateMovie
  * @apiGroup Movies
  * @apiVersion 0.1.0
@@ -283,7 +281,7 @@ ctrl.put = function *(next, params, request){
 };
 
 /**
- * @api {del} /movie/:id Delete a movie
+ * @api {del} /api/movie/:id Delete a movie
  * @apiName DeleteOneMovie
  * @apiGroup Movies
  * @apiVersion 0.1.0
