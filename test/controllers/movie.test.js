@@ -13,7 +13,11 @@ var randomId = faker.random.number();
 var randomSlug = faker.name.lastName();
 var randomImg = faker.image.image();
 
+var randomIndex_1 = faker.lorem.sentence();
+var randomIndex_2 = faker.lorem.sentence();
+var randomIndex_3 = faker.lorem.sentence();
 
+console.log(randomIndex_1);
 function request() {
   return supertest(app.listen());
 }
@@ -34,6 +38,9 @@ describe('CRUD Movie',function(){
     .send({ 
       id_themoviedb: randomId, 
       slug: randomSlug,
+      index_1: randomIndex_1,
+      index_2: randomIndex_2,
+      index_3: randomIndex_3,
       picto: randomImg
     })
     .set('X-app-UUID', randomUUID)
@@ -108,6 +115,9 @@ describe('CRUD Movie',function(){
     .send({ 
       id_themoviedb: randomId, 
       slug: randomSlug + '-updated',
+      index_1: randomIndex_1,
+      index_2: randomIndex_2,
+      index_3: randomIndex_3,
       picto: randomImg
     })
     .set('X-app-UUID', randomUUID)

@@ -14,6 +14,10 @@ var randomScore = faker.random.number();
 var randomSlug = faker.name.lastName();
 var randomImg = faker.image.image();
 
+var randomIndex_1 = faker.lorem.sentence();
+var randomIndex_2 = faker.lorem.sentence();
+var randomIndex_3 = faker.lorem.sentence();
+
 
 function request() {
   return supertest(app.listen());
@@ -60,6 +64,9 @@ describe('CRUD Score',function(){
     .send({ 
       id_themoviedb: randomId, 
       slug: randomSlug,
+      index_1: randomIndex_1,
+      index_2: randomIndex_2,
+      index_3: randomIndex_3,
       picto: randomImg
     })
     .set('X-app-UUID', randomUUID)
@@ -151,7 +158,7 @@ describe('CRUD Score',function(){
     });
   });
   
-  /*
+
   it('removes a score', function(done){
       server
       request()
@@ -198,6 +205,6 @@ describe('CRUD Score',function(){
         expect(res.body.meta.code).to.eql(200)    
         done()
       })
-  })   */
+  })
 
 });

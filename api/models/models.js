@@ -14,7 +14,19 @@ var MovieSchema = new Schema({
   picto: {
         type: String,
         required: true
-    },
+    },  
+  index_1: {
+        type: String,
+        required: true
+  },
+  index_2: {
+        type: String,
+        required: true
+  },
+  index_3: {
+        type: String,
+        required: true
+  },
   created: {
         type: Date,
         default: Date.now

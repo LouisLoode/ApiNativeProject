@@ -38,6 +38,9 @@ var outputFieldsSecurity = 'slug id_themoviedb picto created updated';
  *          "id_themoviedb": "23383",
  *          "slug": "hamlet",
  *          "picto": "hamlet.png",
+ *          "index_1": "",
+ *          "index_2": "",
+ *          "index_3": "",
  *          "_id": "572f7196e002358e0e7e5c91",
  *          "created": "2016-05-08T17:04:22.923Z",
  *          "updated": "2016-05-08T17:04:22.923Z"
@@ -97,6 +100,9 @@ ctrl.list = function *(next){
  *          "id_themoviedb": "23383",
  *          "slug": "hamlet",
  *          "picto": "hamlet.png",
+ *          "index_1": "",
+ *          "index_2": "",
+ *          "index_3": "",
  *          "_id": "572f7196e002358e0e7e5c91",
  *          "created": "2016-05-08T17:04:22.923Z",
  *          "updated": "2016-05-08T17:04:22.923Z",
@@ -143,6 +149,9 @@ ctrl.get = function *(next, params) {
           var final = {
             _id: result._id,
             slug: result.slug,
+            index_1: result.index_1,
+            index_2: result.index_2,
+            index_3: result.index_3,
             picto: config.app.url + '/' + result.picto,
             updated: result.updated,
             created: result.created,
@@ -169,6 +178,9 @@ ctrl.get = function *(next, params) {
  *
  * @apiParam {Number} id_themoviedb  id of the movie in the API of themoviedb.
  * @apiParam {String} slug  slug of the movie.
+ * @apiParam {String} index_1  index 1 of the movie.
+ * @apiParam {String} index_2  index 2 of the movie.
+ * @apiParam {String} index_3  index 1 of the movie.
  * @apiParam {String} picto  pictogram name's of the movie.
  *
  * @apiSuccessExample {json} Success-Response:
@@ -184,6 +196,9 @@ ctrl.get = function *(next, params) {
  *          "id_themoviedb": "23383",
  *          "slug": "hamlet",
  *          "picto": "hamlet.png",
+ *          "index_1": "",
+ *          "index_2": "",
+ *          "index_3": "",
  *          "_id": "5731d3fb8d476abe2445b03d",
  *          "created": "2016-05-10T12:28:43.482Z"
  *        }
@@ -205,6 +220,18 @@ ctrl.post = function *(next){
     this.status = 400;
     return this.body = 'Missing pictogram';
   }
+  if (!this.request.body.index_1) {
+    this.status = 400;
+    return this.body = 'Missing index 1';
+  }
+  if (!this.request.body.index_2) {
+    this.status = 400;
+    return this.body = 'Missing index 2';
+  }
+  if (!this.request.body.index_3) {
+    this.status = 400;
+    return this.body = 'Missing index 3';
+  }
   if (!this.request.body.id_themoviedb) {
     this.status = 400;
     return this.body = 'Missing the ID of the movie for themoviedb API';
@@ -212,6 +239,9 @@ ctrl.post = function *(next){
     try {
       var result = new Movie({ id_themoviedb: this.request.body.id_themoviedb, 
                                  slug: this.request.body.slug,
+                                 index_1: this.request.body.index_1,
+                                 index_2: this.request.body.index_2,
+                                 index_3: this.request.body.index_3,
                                  picto: this.request.body.picto 
                                });
       result = yield result.save();
@@ -236,6 +266,9 @@ ctrl.post = function *(next){
  *
  * @apiParam {Number} id_themoviedb  id of the movie in the API of themoviedb.
  * @apiParam {String} slug  slug of the movie.
+ * @apiParam {String} index_1  index 1 of the movie.
+ * @apiParam {String} index_2  index 2 of the movie.
+ * @apiParam {String} index_3  index 1 of the movie. 
  * @apiParam {String} picto  pictogram name's of the movie.
  *
  * @apiSuccessExample {json} Success-Response:
@@ -250,6 +283,9 @@ ctrl.post = function *(next){
  *        "data": {
  *          "id_themoviedb": "23383",
  *          "slug": "hamlet",
+ *          "index_1": "",
+ *          "index_2": "",
+ *          "index_3": "",
  *          "picto": "hamlet.png",
  *          "_id": "5731d3fb8d476abe2445b03d",
  *          "created": "2016-05-10T12:28:43.482Z"
@@ -263,6 +299,9 @@ ctrl.put = function *(next, params, request){
     //console.log(this.request.body);
     var request = { id_themoviedb: this.request.body.id_themoviedb, 
                    slug: this.request.body.slug,
+                   index_1: this.request.body.index_1,
+                   index_2: this.request.body.index_2,
+                   index_3: this.request.body.index_3,
                    picto: this.request.body.picto,
                    updated: new Date
                   };
