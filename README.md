@@ -4,18 +4,11 @@
 0.1.0
 
 ### Description
-KoApi is a starter for an robust API.
-  - CRUD example
-  - Add Code Comments
-  - Doc-ready
-  - Travis Building
+API for Native Project school.
 
 ### Tech
 KoApi uses a number of open source projects to work properly:
 * [node.js] - evented I/O for the backend
-
-And of course Dillinger itself is open source with a [public repository][KoApi]
- on GitHub.
  
 ### Installation
 

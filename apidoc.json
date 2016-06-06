@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Documentation for the ApiNativeProject",
   "title": "Doc - ApiNativeProject",
-  "url" : "http://localhost:3000",
+  "url" : "http://163.172.29.197:3000",
   "header": {
     "title": "Install, config and run",
     "filename": "./doc/header.md"

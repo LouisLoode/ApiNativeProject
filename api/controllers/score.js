@@ -1,20 +1,20 @@
 'use strict';
 
-var isuuid = require('isuuid');
+var request = require('koa-request');
 var config = require('../../config/config');
 
-var users = require('../models/models');
+var messages = require('../models/models');
 var mongoose = require('mongoose');
-var User = mongoose.model('User');
+var Score = mongoose.model('Score');
 
 var ctrl = module.exports = {};
 
-var outputFieldsSecurity = 'uuid scores created updated';
+var outputFieldsSecurity = 'id_movie id_user score created';
 
 /**
- * @api {get} /api/users/ Get all the users
- * @apiName ShowAllUsers
- * @apiGroup Users
+ * @api {get} /api/scores/ Get all the movies
+ * @apiName ShowAllScores
+ * @apiGroup Scores
  * @apiVersion 0.1.0
  *
  * @apiSuccessExample {json} Success-Response:
@@ -26,13 +26,13 @@ var outputFieldsSecurity = 'uuid scores created updated';
  *          "version": "1.0.0",
  *          "now": "2016-05-08T17:04:22.926Z"
  *        },
- *        "data": [{
- *          "score": { ... },
- *          "uuid": "",
+ *        "data": {
+ *          "id_movie": "572f7196e002358e0e7e5c91",
+ *          "id_user": "572f7196e002358e0e7e5c91",
+ *          "score": "50",
  *          "_id": "572f7196e002358e0e7e5c91",
- *          "created": "2016-05-08T17:04:22.923Z",
- *          "updated": "2016-05-08T17:04:22.923Z"
- *        }]
+ *          "created": "2016-05-08T17:04:22.923Z"
+ *        }
  *      }
  *
  * @apiParamExample {json} Request-Example:
@@ -47,13 +47,13 @@ ctrl.list = function *(next){
   yield next;
   var error, result;
   try {
-    var conditions = {};
+   var conditions = {};
     var query = this.request.query;
     if (query.q) {
       conditions = JSON.parse(query.q);
     }
-    var builder = User.find(conditions, outputFieldsSecurity);
-    ['limit', 'skip', 'sort'].forEach(function(key){
+    var builder = Score.find(conditions, outputFieldsSecurity);
+      ['limit', 'skip', 'sort'].forEach(function(key){
       if (query[key]) {
         builder[key](query[key]);
       }
@@ -68,12 +68,12 @@ ctrl.list = function *(next){
 
 
 /**
- * @api {get} /api/user/:id Get one user
- * @apiName ShowOneUser
- * @apiGroup Users
+ * @api {get} /api/score/:id Get one score
+ * @apiName ShowOneScore
+ * @apiGroup Scores
  * @apiVersion 0.1.0
  *
- * @apiParam {String} id  Id of the user or the uuid.
+ * @apiParam {String} id  Id of the score.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -84,13 +84,13 @@ ctrl.list = function *(next){
  *          "version": "0.0.1",
  *          "now": "2016-05-08T17:04:22.926Z"
  *        },
- *        "data": [{
- *          "score": { ... },
- *          "uuid": "",
+ *        "data": {
+ *          "id_movie": "572f7196e002358e0e7e5c91",
+ *          "id_user": "572f7196e002358e0e7e5c91",
+ *          "score": "50",
  *          "_id": "572f7196e002358e0e7e5c91",
- *          "created": "2016-05-08T17:04:22.923Z",
- *          "updated": "2016-05-08T17:04:22.923Z"
- *        }]
+ *          "created": "2016-05-08T17:04:22.923Z"
+ *        }
  *      }
  *
  * @apiErrorExample {json} Error-Response
@@ -110,22 +110,13 @@ ctrl.get = function *(next, params) {
   yield next;
   var error, result;
   try {
-    var isUUID = isuuid(this.params.id); // true
-    if(isUUID){
-      var req = { 'uuid': this.params.id};
-    } else {
-      var req = { '_id': this.params.id};
-    }
-
     //console.log(this.params.id);
-    result = yield User.findOne(req, outputFieldsSecurity).exec();
+    result = yield Score.findOne({ '_id': this.params.id}, outputFieldsSecurity).exec();
     
     //console.log(result);
     if (result == null) {
       this.status = 404;
-    } else {
-      //console.log(final);
-      
+    } else {      
       this.status = 200;
       return this.body = result;
     }
@@ -137,12 +128,14 @@ ctrl.get = function *(next, params) {
 
 
  /**
- * @api {post} /api/user Post an user
- * @apiName AddUser
- * @apiGroup Users
+ * @api {post} /api/score Post a score
+ * @apiName AddScore
+ * @apiGroup Scores
  * @apiVersion 0.1.0
  *
- * @apiParam {String} uuid  id of the movie in the API of themoviedb.
+ * @apiParam {String} id_movie  id of the movie
+ * @apiParam {String} id_user  id of the user
+ * @apiParam {Number} score  score of the user for a movie.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -154,7 +147,9 @@ ctrl.get = function *(next, params) {
  *          "now": "2016-05-10T12:28:43.502Z"
  *        },
  *        "data": {
- *          "uuid": "",
+ *          "id_themoviedb": "23383",
+ *          "slug": "hamlet",
+ *          "picto": "hamlet.png",
  *          "_id": "5731d3fb8d476abe2445b03d",
  *          "created": "2016-05-10T12:28:43.482Z"
  *        }
@@ -168,13 +163,22 @@ ctrl.post = function *(next){
     this.status = 400;
     return this.body = 'The body is empty';
   }
-  if (!this.request.body.uuid) {
+  if (!this.request.body.id_movie) {
     this.status = 400;
-    return this.body = 'Missing uuid';
+    return this.body = 'Missing ID movie';
   }
-  else{
+  if (!this.request.body.id_user) {
+    this.status = 400;
+    return this.body = 'Missing ID user';
+  }
+  if (!this.request.body.score) {
+    this.status = 400;
+    return this.body = 'Missing the score';
+  }else{
     try {
-      var result = new User({ uuid: this.request.body.uuid
+      var result = new Score({ id_movie: this.request.body.id_movie, 
+                                 id_user: this.request.body.id_user,
+                                 score: this.request.body.score 
                                });
       result = yield result.save();
       this.status = 200;
@@ -187,75 +191,14 @@ ctrl.post = function *(next){
   }
 };
 
- /**
- * @api {post} /api/user/:id/score Post a score for an user
- * @apiName AddScoreUser
- * @apiGroup Users
- * @apiVersion 0.1.0
- *
- * @apiParam {Number} score  score of the movie
- *
- * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
- *      {
- *        "meta": {
- *          "ok": true,
- *          "code": 200,
- *          "version": "0.0.1",
- *          "now": "2016-05-10T12:28:43.502Z"
- *        },
- *        "data": {
- *          "uuid": "",
- *          "_id": "5731d3fb8d476abe2445b03d",
- *          "created": "2016-05-10T12:28:43.482Z"
- *        }
- *      }
- */
-
-ctrl.put = function *(next, params, request){
-  yield next;
-  var error, result;
-  console.log(User);
-  try {
-    
-    var request = { 
-        score: {
-          id_movie: this.request.body.id_movie, 
-          score: this.request.body.score, 
-          date: new Date
-        }
-                  };
-
-    User.score.push({
-          id_movie: this.request.body.id_movie, 
-          score: this.request.body.score, 
-          date: new Date
-        });
-
-result = User.save(); // anything will now get saved
-
-    //result = yield User.findByIdAndUpdate(this.params.id, request, {new: true}).populate('Movie').exec();
-    console.log(result);
-    if (result == null) {
-      this.status = 404;
-    } else {
-      this.status = 200;
-      return this.body = result;
-    }
-  } catch (error) {
-      this.status = 400;
-      return this.body = error.name;
-  }
-};
-
 
 /**
- * @api {del} /api/user/:id Delete an user
- * @apiName DeleteUser
- * @apiGroup Users
+ * @api {del} /api/score/:id Delete a score
+ * @apiName DeleteOneScore
+ * @apiGroup Scores
  * @apiVersion 0.1.0
  *
- * @apiParam {String} id  Id of the user.
+ * @apiParam {String} id  Id of the movie.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -277,16 +220,7 @@ ctrl.del = function *(next, params){
   yield next;
   var error, result;
   try {
-
-    var isUUID = isuuid(this.params.id); // true
-    if(isUUID){
-      var req = { uuid: this.params.id};
-    } else {
-      var req = { _id: this.params.id};
-    }
-
-    result = yield User.remove(req).exec();
-    this.status = 200;
+    result = yield Score.remove({ _id: this.params.id }).exec();
     return this.body = result;
   } catch (error) {
     this.status = 400;
