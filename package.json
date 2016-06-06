@@ -13,8 +13,8 @@
   "private": false,
   "scripts": {
     "test": "NODE_ENV=test ./node_modules/.bin/mocha 'test/**/*.js' --reporter spec",
-    "start": "NODE_ENV=production forever start ./config/processus.json",
-    "stop": "forever stop ./config/processus.json"
+    "start": "NODE_ENV=production forever start server.js",
+    "stop": "forever stop server.js"
   },
   "repository": {
     "type": "git",
