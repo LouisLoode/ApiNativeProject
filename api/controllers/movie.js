@@ -15,9 +15,9 @@ var ctrl = module.exports = {};
 var outputFieldsSecurity = 'slug id_themoviedb picto created updated';
 
 /**
- * @api {get} /assets/pictos/:name Route to a pictogram
- * @apiName Url to pricto
- * @apiGroup Illus
+ * @api {get} /assets/illus/:name Route to an illustration
+ * @apiName UrlsToIllustrations
+ * @apiGroup Urls
  * @apiVersion 0.1.0
  *
  */
