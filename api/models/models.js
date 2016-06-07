@@ -40,15 +40,12 @@ var MovieSchema = new Schema({
 // set up a mongoose model
 var ScoreSchema = new Schema({
   id_movie: {
-        type: Schema.Types.ObjectId,
+        type: String,
         required: true,
-        unique: true,
-        ref: 'Movie'
     },
   id_user: {
-        type: Schema.Types.ObjectId,
+        type: String,
         required: true,
-        ref: 'User'
     },
   score: {
         type: Number,
@@ -72,7 +69,6 @@ var UserSchema = new Schema({
         type: Date,
         default: Date.now
     },
-  scores: [{ type: Schema.Types.ObjectId, ref: 'Score' }],
   updated: {
         type: Date,
         default: null

@@ -25,7 +25,7 @@ var specific = {
       pass: '',
       host: '127.0.0.1',
       port: 27017,
-      database: 'api-native-project'
+      database: 'api-native-project-test'
     },
     themoviedb: {
       api_key: 'c1ac741d5dd740f9861e794c5363b0c2',
