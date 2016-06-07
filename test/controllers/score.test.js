@@ -107,7 +107,6 @@ describe('CRUD Score',function(){
     });
   });
 
-
   it('get a score - 200',function(done){
     this.timeout(5000);
     server
@@ -157,7 +156,6 @@ describe('CRUD Score',function(){
         done();
     });
   });
-  
 
   it('removes a score', function(done){
       server

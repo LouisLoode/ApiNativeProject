@@ -28,6 +28,8 @@ module.exports = function(app, config) {
   // Movies
   //router.get('/movies', app.oauth.authorise(), messageController.list);
   router.get('/movies', movieController.list);
+  router.get('/movies/state', movieController.state);
+  router.get('/movies/success', movieController.success);
   router.get('/movie/:id', movieController.get);
   router.post('/movie', movieController.post);
   router.put('/movie/:id', movieController.put);

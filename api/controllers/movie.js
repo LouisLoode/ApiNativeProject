@@ -1,11 +1,14 @@
 'use strict';
 
 var request = require('koa-request');
+var arrayDiff = require('simple-array-diff');
 var config = require('../../config/config');
 
 var messages = require('../models/models');
 var mongoose = require('mongoose');
+var User = mongoose.model('User');
 var Movie = mongoose.model('Movie');
+var Score = mongoose.model('Score');
 
 var ctrl = module.exports = {};
 
@@ -14,10 +17,119 @@ var outputFieldsSecurity = 'slug id_themoviedb picto created updated';
 /**
  * @api {get} /assets/pictos/:name Route to a pictogram
  * @apiName Url to pricto
- * @apiGroup Pictograms
+ * @apiGroup Illus
  * @apiVersion 0.1.0
  *
  */
+
+ /**
+ * @api {get} /api/movies/success Get the movies success
+ * @apiName ShowPlayedMovies
+ * @apiGroup Movies
+ * @apiVersion 0.1.0
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *      {
+ *        "meta": {
+ *          "ok": true,
+ *          "code": 200
+ *          "version": "1.0.0",
+ *          "now": "2016-05-08T17:04:22.926Z"
+ *        },
+ *        "data": ['575614197a0775750d64071e','575614197a0775750d64071d']
+ *      }
+ */
+ctrl.success = function *(next){
+  yield next;
+  var error, result_score, result_user;
+  var user_uuid = this.request.get('X-app-UUID');
+  var condition = {'uuid':user_uuid};
+  //console.log(user_uuid);
+
+  try {
+    var result_user = yield User.find(condition).exec();
+    var id_user = result_user[0]._id;
+    //console.log(id_user);
+    try{
+      var condition = {'id_user':id_user};
+      var result_score = yield Score.find(condition).exec();
+      //console.log(result_score);
+
+      var movies = [];
+      for (var i = 0; i<result_score.length; i++) {
+      movies[i] = result_score[i].id_movie;
+      };
+
+      //console.log(movies);
+
+      return this.body = movies;
+    } catch (erro){
+     this.status = 500;
+    return this.body = error;
+    }
+  } catch (error) {
+     this.status = 500;
+    return this.body = error;
+  }
+};
+
+/**
+ * @api {get} /api/movies/state Get the movies who aren't played yet
+ * @apiName ShowUnplayedMovies
+ * @apiGroup Movies
+ * @apiVersion 0.1.0
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *      {
+ *        "meta": {
+ *          "ok": true,
+ *          "code": 200
+ *          "version": "1.0.0",
+ *          "now": "2016-05-08T17:04:22.926Z"
+ *        },
+ *        "data": ['575614197a0775750d64071e','575614197a0775750d64071d']
+ *      }
+ */
+ctrl.state = function *(next){
+  yield next;
+  var error, result_user, result_movie, result_score;
+  var user_uuid = this.request.get('X-app-UUID');
+  var condition = {'uuid':user_uuid};
+
+  try {
+    var result_user = yield User.find(condition).exec();
+    var id_user = result_user[0]._id;
+
+    try{
+      var condition = {'id_user':id_user};
+      var result_score = yield Score.find(condition).exec();
+
+      var played_movies = [];
+      for (var i = 0; i<result_score.length; i++) {
+        played_movies[i] = result_score[i].id_movie;
+      };
+
+      var result_movie = yield Movie.find('').exec();
+      var all_movies = [];
+      for (var i = 0; i<result_movie.length; i++) {
+        all_movies[i] = result_movie[i]._id;
+      };
+
+      var result = arrayDiff(all_movies,played_movies);
+
+      return this.body = result.removed;
+    } catch (erro){
+     this.status = 500;
+    return this.body = error;
+    }
+  } catch (error) {
+     this.status = 500;
+    return this.body = error;
+  }
+};
+
 
 /**
  * @api {get} /api/movies/ Get all the movies

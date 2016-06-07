@@ -17,7 +17,6 @@ var randomIndex_1 = faker.lorem.sentence();
 var randomIndex_2 = faker.lorem.sentence();
 var randomIndex_3 = faker.lorem.sentence();
 
-console.log(randomIndex_1);
 function request() {
   return supertest(app.listen());
 }
