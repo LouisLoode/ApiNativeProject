@@ -142,8 +142,6 @@ ctrl.get = function *(next, params) {
  * @apiGroup Users
  * @apiVersion 0.1.0
  *
- * @apiParam {String} uuid  id of the movie in the API of themoviedb.
- *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *      {
@@ -163,19 +161,15 @@ ctrl.get = function *(next, params) {
 ctrl.post = function *(next){
   yield next;
   var error, result;
+
   //console.log(this.request.body);
   if (!this.request.body) {
     this.status = 400;
     return this.body = 'The body is empty';
-  }
-  if (!this.request.body.uuid) {
-    this.status = 400;
-    return this.body = 'Missing uuid';
-  }
-  else{
+  }else{
     try {
-      var result = new User({ uuid: this.request.body.uuid
-                               });
+      var user_uuid = this.request.get('X-app-UUID');
+      var result = new User({ uuid: user_uuid});
       result = yield result.save();
       this.status = 200;
       this.body = result;
@@ -277,7 +271,7 @@ ctrl.del = function *(next, params){
   yield next;
   var error, result;
   try {
-
+    //user_uuid
     var isUUID = isuuid(this.params.id); // true
     if(isUUID){
       var req = { uuid: this.params.id};
