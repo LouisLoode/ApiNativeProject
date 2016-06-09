@@ -4,6 +4,7 @@ var https = require('https');
 var Stream = require('stream').Transform;                                
 var fs = require('fs'); 
 var gm = require('gm').subClass({imageMagick: true});   
+var path = require('path');
 
 var request = require('koa-request');
 var arrayDiff = require('simple-array-diff');
@@ -410,15 +411,18 @@ ctrl.post = function *(next){
             .crop('1000', '563')
             .write('public/'+url_cover_local, function (err) {
               if (err) {console.log(err)}
-              else{console.log('Crop Cover -> Done !')};
+              else{console.log('Crop Cover -> Done !')}
             });  
 
           gm('public/'+url_tmp)
             .resize('150', '225', '^')
             .write('public/'+url_thumbnail_local, function (err) {
-              if (err) {console.log(err)}
-              else{console.log('Crop Thumbnail -> Done !')
-            fs.unlinkSync('public/'+url_tmp);};
+              if (err) {
+                console.log(err);
+              } else{
+               console.log('Crop Thumbnail -> Done !');
+               
+              }
             });  
 
    
@@ -548,23 +552,31 @@ ctrl.put = function *(next, params, request){
  */
 ctrl.del = function *(next, params){
   yield next;
-  var error, result;
+  var error, result, result_del;
   try {
 
         //console.log(this.params.id);
     result = yield Movie.findOne({ '_id': this.params.id}, outputFieldsSecurity).exec();
-    //console.log(result);
+    //console.log(result.cover);
+
     if (result == null) {
       this.status = 404;
     } else {
 
-    result = yield Movie.remove({ _id: this.params.id }).exec();
+    result_del = yield Movie.remove({ _id: this.params.id }).exec();
 
-    /*var filePath = "c:/book/discovery.docx" ; 
-    fs.unlinkSync(filePath);*/
+      var result_get = result.cover;
+      //console.log(result_get);
+      var filename = path.parse(result_get).base;
+      //console.log(filename);
+
+      fs.unlinkSync('public/posters/cover/'+ filename);
+      fs.unlinkSync('public/posters/thumbnails/'+ filename);
+      fs.unlinkSync('public/tmp/posters/'+ filename);
+
       
       this.status = 200;
-      return this.body = result;
+      return this.body = result_del;
     }
 
 
