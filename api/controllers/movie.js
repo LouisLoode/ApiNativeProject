@@ -410,8 +410,12 @@ ctrl.post = function *(next){
             .gravity('Center')
             .crop('1000', '563')
             .write('public/'+url_cover_local, function (err) {
-              if (err) {console.log(err)}
-              else{console.log('Crop Cover -> Done !')}
+              if (err) {
+                console.log(err);
+              } else{
+               console.log('Crop Cover -> Done !');
+               
+              }
             });  
 
           gm('public/'+url_tmp)
