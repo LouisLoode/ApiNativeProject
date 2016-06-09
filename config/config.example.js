@@ -20,6 +20,14 @@ var specific = {
       name: 'ApiNativeProject - Dev',
       keys: [ 'super-secret' ],
     },
+    pictures: {
+      illustration_path: 'public/illus/',
+      poster_tmp_path: 'public/tmp/posters/',
+      poster_cover_path: 'public/posters/cover/',
+      poster_thumb_path: 'public/posters/thumbnails/',
+      actors_tmp_path: 'public/tmp/actors/',
+      actors_thumb_path: 'public/actors/thumbnails/'
+    },
     mongo: {
       user: '',
       pass: '',
@@ -39,6 +47,14 @@ var specific = {
       name: 'ApiNativeProject - Test ',
       keys: [ 'super-secret' ],
     },
+    pictures: {
+      illustration_path: 'public/illus/',
+      poster_tmp_path: 'public/tmp/posters/',
+      poster_cover_path: 'public/posters/cover/',
+      poster_thumb_path: 'public/posters/thumbnails/',
+      actors_tmp_path: 'public/tmp/actors/',
+      actors_thumb_path: 'public/actors/thumbnails/'
+    },
     mongo: {
       user: '',
       pass: '',
@@ -57,6 +73,14 @@ var specific = {
       port: process.env.PORT || 3000,
       name: 'ApiNativeProject',
       keys: [ 'super-secret' ],
+    },
+    pictures: {
+      illustration_path: 'public/illus/',
+      poster_tmp_path: 'public/tmp/posters/',
+      poster_cover_path: 'public/posters/cover/',
+      poster_thumb_path: 'public/posters/thumbnails/',
+      actors_tmp_path: 'public/tmp/actors/',
+      actors_thumb_path: 'public/actors/thumbnails/'
     },
     mongo: {
       user: '',

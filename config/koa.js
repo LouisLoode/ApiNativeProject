@@ -60,8 +60,8 @@ module.exports = function(app, config) {
   // Check if user use a valid UUID for API
   app.use(function *(next){
     var appReqPath = path.dirname(this.request.url);
-    //console.log(name);
-    if(appReqPath === '/assets/pictos'){
+    //console.log(appReqPath);
+    if(appReqPath === '/assets/posters/cover' || appReqPath === '/assets/posters/thumbnails' || appReqPath === '/assets/actors/thumbnails'){
       yield next;
     } else {
       var appReqUUI = this.request.get('X-app-UUID');

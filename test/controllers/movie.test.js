@@ -9,7 +9,7 @@ faker.locale = 'fr';
 var config = require('../../config/config');
 
 var randomUUID = faker.random.uuid();
-var randomId = faker.random.number();
+var randomId = '293660';
 var randomSlug = faker.name.lastName();
 var randomImg = faker.image.image();
 
@@ -31,6 +31,7 @@ describe('CRUD Movie',function(){
 
   it('post a movie',function(done){
     // calling home page api
+        this.timeout(10000);
     server
     request()
     .post('/api/movie')
@@ -40,7 +41,7 @@ describe('CRUD Movie',function(){
       index_1: randomIndex_1,
       index_2: randomIndex_2,
       index_3: randomIndex_3,
-      picto: randomImg
+      illu: randomImg
     })
     .set('X-app-UUID', randomUUID)
     .set('Content-Type', 'application/json')
@@ -58,7 +59,7 @@ describe('CRUD Movie',function(){
 
 
   it('get a movie - 200',function(done){
-    this.timeout(5000);
+        this.timeout(5000);
     server
     request()
     .get('/api/movie/' + id)
@@ -76,6 +77,7 @@ describe('CRUD Movie',function(){
   });
 
   it('get a movie - 404',function(done){
+        this.timeout(5000);
     server
     request()
     .get('/api/movie/qsd' + id)
@@ -91,6 +93,7 @@ describe('CRUD Movie',function(){
   });
 
   it('get a collection of movies',function(done){
+        this.timeout(5000);
     server
     request()
     .get('/api/movies')
@@ -108,6 +111,7 @@ describe('CRUD Movie',function(){
   });
   
   it('update a movie', function(done){
+        this.timeout(5000);
     server
     request()
     .put('/api/movie/' + id)
@@ -117,7 +121,7 @@ describe('CRUD Movie',function(){
       index_1: randomIndex_1,
       index_2: randomIndex_2,
       index_3: randomIndex_3,
-      picto: randomImg
+      illu: randomImg
     })
     .set('X-app-UUID', randomUUID)
     .set('Content-Type', 'application/json')
@@ -148,6 +152,7 @@ describe('CRUD Movie',function(){
   })
   
   it('removes a movie', function(done){
+      this.timeout(5000);
       server
       request()
       .del('/api/movie/' + id)

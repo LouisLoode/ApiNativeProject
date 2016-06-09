@@ -9,11 +9,12 @@ faker.locale = 'fr';
 var config = require('../../config/config');
 
 var randomUUID = faker.random.uuid();
-var randomId = faker.random.number();
+var randomId = '550';
 var randomScore = faker.random.number();
 var randomSlug = faker.name.lastName();
 var randomImg = faker.image.image();
 
+//var randomIndex_1 = faker.lorem.sentence();
 var randomIndex_1 = faker.lorem.sentence();
 var randomIndex_2 = faker.lorem.sentence();
 var randomIndex_3 = faker.lorem.sentence();
@@ -35,13 +36,11 @@ describe('CRUD Score',function(){
   var id_movie
 
   it('post an user',function(done){
+            this.timeout(5000);
     // calling home page api
     server
     request()
-    .post('/api/user')
-    .send({ 
-      uuid: randomUUID
-    })
+    .get('/api/user')
     .set('X-app-UUID', randomUUID)
     .set('Content-Type', 'application/json')
     .end(function(err,res){
@@ -57,6 +56,7 @@ describe('CRUD Score',function(){
   });
 
   it('post a movie',function(done){
+      this.timeout(20000);
     // calling home page api
     server
     request()
@@ -66,8 +66,7 @@ describe('CRUD Score',function(){
       slug: randomSlug,
       index_1: randomIndex_1,
       index_2: randomIndex_2,
-      index_3: randomIndex_3,
-      picto: randomImg
+      index_3: randomIndex_3
     })
     .set('X-app-UUID', randomUUID)
     .set('Content-Type', 'application/json')
@@ -84,6 +83,7 @@ describe('CRUD Score',function(){
   });
 
   it('post a score',function(done){
+      this.timeout(5000);
     // calling home page api
     server
     request()
@@ -126,6 +126,7 @@ describe('CRUD Score',function(){
   });
 
   it('get a score - 404',function(done){
+    this.timeout(5000);
     server
     request()
     .get('/api/score/qsd' + id_score)
@@ -141,6 +142,7 @@ describe('CRUD Score',function(){
   });
 
   it('get a collection of scores',function(done){
+    this.timeout(5000);
     server
     request()
     .get('/api/scores')
@@ -158,6 +160,7 @@ describe('CRUD Score',function(){
   });
 
   it('removes a score', function(done){
+      this.timeout(5000);
       server
       request()
       .del('/api/score/' + id_score)
@@ -174,6 +177,7 @@ describe('CRUD Score',function(){
   })  
 
   it('removes a movie', function(done){
+    this.timeout(5000);
       server
       request()
       .del('/api/movie/' + id_movie)
@@ -190,6 +194,7 @@ describe('CRUD Score',function(){
   })  
 
     it('removes an user', function(done){
+      this.timeout(5000);
       server
       request()
       .del('/api/user/' + id_user)
