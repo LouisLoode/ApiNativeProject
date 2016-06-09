@@ -20,6 +20,16 @@ var ctrl = module.exports = {};
 
 var outputFieldsSecurity = 'title slug id_themoviedb overview genres budget revenue release_date index_1 index_2 index_3 illu cover thumbnail created updated cast crew';
 
+function cleanArray(actual) {
+  var newArray = new Array();
+  for (var i = 0; i < actual.length; i++) {
+    if (actual[i]) {
+      newArray.push(actual[i]);
+    }
+  }
+  return newArray;
+}
+
 /**
  * @api {get} /assets/illus/:name Route to an illustration
  * @apiName UrlsToIllustrations
@@ -381,65 +391,71 @@ ctrl.post = function *(next){
       var ext = info.poster_path.split('.').pop();
       //console.log(ext);
       var url_distant = 'https://image.tmdb.org/t/p/original' + info.poster_path;    
-      var url_tmp = config.pictures.poster_tmp_path + slug_movie + '.' + ext;        
       var url_cover_local = config.pictures.poster_cover_path + slug_movie + '.' + ext;    
       var url_thumbnail_local = config.pictures.poster_thumb_path + slug_movie + '.' + ext;  
       var url_illu = config.pictures.illustration_path + slug_movie + '.png'; 
-      //console.log(url_tmp);
       //console.log(url_distant);
       //console.log(url_cover_local);
       //console.log(url_thumbnail_local);
       //console.log(url_illu);
-
-  if (config.app.env !== 'test') {
   
-      https.request(url_distant, function(response) {                                        
-        var data = new Stream();                                                    
 
-        response.on('data', function(chunk) {                                       
-          data.push(chunk);                                                         
-        });                                                                         
+    // Resize cover picture
+    gm(url_distant)
+      .resize('1000', '563', '^')
+      .gravity('Center')
+      .crop('1000', '563')
+      .write('public/'+url_cover_local, function (err) {
+        if (err) {
+          console.log(err);
+        } else{
+         console.log('Crop Cover -> Done : '+url_cover_local);
 
-        response.on('end', function() {       
+        
+        gm(url_distant)
+          .resize('150', '225', '^')
+          .write('public/'+url_thumbnail_local, function (err) {
+            if (err) {
+              console.log(err);
+            } else{
+             console.log('Crop Thumbnail -> Done : '+url_thumbnail_local);
+             
+            }
+          });  
+         
+        }
+      });  
 
-          fs.writeFile('public/'+url_tmp, data.read()); 
+      
+      var urls_actors = [];
+      for (var i = 0; i<cast.cast.length; i++) {
+        if(cast.cast[i].profile_path !== null){
+          urls_actors[i] = {profile_id: cast.cast[i].id, profile_path: cast.cast[i].profile_path};
+        }
+      };
 
-          // Resize cover picture
-          console.log(url_cover_local);
-          gm('public/'+url_tmp)
-            .resize('1000', '563', '^')
-            .gravity('Center')
-            .crop('1000', '563')
-            .write('public/'+url_cover_local, function (err) {
-              if (err) {
-                console.log(err);
-              } else{
-               console.log('Crop Cover -> Done !');
-               
-              }
-            });  
+    var actors = cleanArray(urls_actors);
 
-          console.log(url_thumbnail_local);
-          gm('public/'+url_tmp)
+    //console.log(actors.length);      
+    
+      for (var i = 0; i<actors.length; i++) {
+
+           var url_actor_distant = 'https://image.tmdb.org/t/p/original' + actors[i].profile_path;      
+           var url_actor_thumbnail_local = config.pictures.actors_thumb_path + actors[i].profile_id + '.jpg';        
+          
+
+      // Resize cover picture
+          gm(url_actor_distant)
             .resize('150', '225', '^')
-            .write('public/'+url_thumbnail_local, function (err) {
-              if (err) {
-                console.log(err);
-              } else{
-               console.log('Crop Thumbnail -> Done !');
-               
-              }
+            .write('public/'+url_actor_thumbnail_local, function (err) {
+                if (err) {
+                  console.log(err);
+                }
             });  
-
-   
-
-                            
-        });                                                                         
-      }).end();
-}
+      };
+      //console.log(cast.cast);
 
     
-      //console.log(cast.crew);
 
       var result = new Movie({ id_themoviedb: this.request.body.id_themoviedb, 
                                  slug: this.request.body.slug,
@@ -575,11 +591,11 @@ ctrl.del = function *(next, params){
       //console.log(result_get);
       var filename = path.parse(result_get).base;
       //console.log(filename);
-if (config.app.env !== 'test') {
-      fs.unlinkSync('public/posters/cover/'+ filename);
-      fs.unlinkSync('public/posters/thumbnails/'+ filename);
-      fs.unlinkSync('public/tmp/posters/'+ filename);
-}
+      if (config.app.env !== 'test') {
+            fs.unlinkSync('public/posters/cover/'+ filename);
+            fs.unlinkSync('public/posters/thumbnails/'+ filename);
+            fs.unlinkSync('public/tmp/posters/'+ filename);
+      }
       
       this.status = 200;
       return this.body = result_del;
