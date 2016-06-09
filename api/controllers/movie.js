@@ -405,6 +405,7 @@ ctrl.post = function *(next){
           fs.writeFile('public/'+url_tmp, data.read()); 
 
           // Resize cover picture
+          console.log(url_cover_local);
           gm('public/'+url_tmp)
             .resize('1000', '563', '^')
             .gravity('Center')
@@ -418,6 +419,7 @@ ctrl.post = function *(next){
               }
             });  
 
+          console.log(url_thumbnail_local);
           gm('public/'+url_tmp)
             .resize('150', '225', '^')
             .write('public/'+url_thumbnail_local, function (err) {
