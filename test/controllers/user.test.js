@@ -30,10 +30,7 @@ describe('CRUD User',function(){
     // calling home page api
     server
     request()
-    .post('/api/user')
-    .send({ 
-      uuid: randomUUID
-    })
+    .get('/api/user')
     .set('X-app-UUID', randomUUID)
     .set('Content-Type', 'application/json')
     .end(function(err,res){

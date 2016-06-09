@@ -1,5 +1,10 @@
 'use strict';
 
+var https = require('https');                                                
+var Stream = require('stream').Transform;                                
+var fs = require('fs'); 
+var gm = require('gm').subClass({imageMagick: true});   
+
 var request = require('koa-request');
 var arrayDiff = require('simple-array-diff');
 var config = require('../../config/config');
@@ -12,7 +17,7 @@ var Score = mongoose.model('Score');
 
 var ctrl = module.exports = {};
 
-var outputFieldsSecurity = 'slug id_themoviedb picto created updated';
+var outputFieldsSecurity = 'title slug id_themoviedb overview genres budget revenue release_date index_1 index_2 index_3 illu cover thumbnail created updated cast crew';
 
 /**
  * @api {get} /assets/illus/:name Route to an illustration
@@ -149,7 +154,7 @@ ctrl.state = function *(next){
  *        "data": {
  *          "id_themoviedb": "23383",
  *          "slug": "hamlet",
- *          "picto": "hamlet.png",
+ *          "illu": "hamlet.png",
  *          "index_1": "",
  *          "index_2": "",
  *          "index_3": "",
@@ -211,14 +216,13 @@ ctrl.list = function *(next){
  *        "data": {
  *          "id_themoviedb": "23383",
  *          "slug": "hamlet",
- *          "picto": "hamlet.png",
+ *          "illu": "hamlet.png",
  *          "index_1": "",
  *          "index_2": "",
  *          "index_3": "",
  *          "_id": "572f7196e002358e0e7e5c91",
  *          "created": "2016-05-08T17:04:22.923Z",
  *          "updated": "2016-05-08T17:04:22.923Z",
- *          "tmb": { ... }
  *        }
  *      }
  *
@@ -247,33 +251,10 @@ ctrl.get = function *(next, params) {
       this.status = 404;
     } else {
 
-      //var final = result;
-
-          var options = { method: 'GET',
-            url: 'https://api.themoviedb.org/3/movie/' + result.id_themoviedb,
-            qs: { api_key: config.themoviedb.api_key, language: config.themoviedb.language },
-            headers: 
-             {'content-type': 'application/json'} };
-         
-          var response = yield request(options); //Yay, HTTP requests with no callbacks! 
-          var info = JSON.parse(response.body);
-
-          var final = {
-            _id: result._id,
-            slug: result.slug,
-            index_1: result.index_1,
-            index_2: result.index_2,
-            index_3: result.index_3,
-            picto: config.app.url + '/' + result.picto,
-            updated: result.updated,
-            created: result.created,
-            tmb: info
-          };
-
       //console.log(final);
       
       this.status = 200;
-      return this.body = final;
+      return this.body = result;
     }
   } catch (error) {
     this.status = 404;
@@ -293,7 +274,6 @@ ctrl.get = function *(next, params) {
  * @apiParam {String} index_1  index 1 of the movie.
  * @apiParam {String} index_2  index 2 of the movie.
  * @apiParam {String} index_3  index 1 of the movie.
- * @apiParam {String} picto  pictogram name's of the movie.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -307,7 +287,7 @@ ctrl.get = function *(next, params) {
  *        "data": {
  *          "id_themoviedb": "23383",
  *          "slug": "hamlet",
- *          "picto": "hamlet.png",
+ *          "illu": "hamlet.png",
  *          "index_1": "",
  *          "index_2": "",
  *          "index_3": "",
@@ -317,7 +297,7 @@ ctrl.get = function *(next, params) {
  *      }
  */
 ctrl.post = function *(next){
-  yield next;
+  yield next
   var error, result;
   //console.log(this.request.body);
   if (!this.request.body) {
@@ -327,10 +307,6 @@ ctrl.post = function *(next){
   if (!this.request.body.slug) {
     this.status = 400;
     return this.body = 'Missing slug';
-  }
-  if (!this.request.body.picto) {
-    this.status = 400;
-    return this.body = 'Missing pictogram';
   }
   if (!this.request.body.index_1) {
     this.status = 400;
@@ -349,12 +325,92 @@ ctrl.post = function *(next){
     return this.body = 'Missing the ID of the movie for themoviedb API';
   }else{
     try {
+
+      var options = { method: 'GET',
+      url: 'https://api.themoviedb.org/3/movie/' + this.request.body.id_themoviedb,
+      qs: { api_key: config.themoviedb.api_key, language: config.themoviedb.language },
+      headers: 
+       {'content-type': 'application/json'} };
+     
+      var response = yield request(options); //Yay, HTTP requests with no callbacks! 
+      var info = JSON.parse(response.body);
+      //console.log(info)
+
+      var options = { method: 'GET',
+      url: 'https://api.themoviedb.org/3/movie/' + this.request.body.id_themoviedb + '/casts',
+      qs: { api_key: config.themoviedb.api_key, language: config.themoviedb.language },
+      headers: 
+       {'content-type': 'application/json'} };
+     
+      var response_cast = yield request(options); //Yay, HTTP requests with no callbacks! 
+      var cast = JSON.parse(response_cast.body);
+
+
+      var slug_movie = this.request.body.slug;                                      
+      var ext = info.poster_path.split('.').pop();
+      //console.log(ext);
+      var url_distant = 'https://image.tmdb.org/t/p/original' + info.poster_path;    
+      var url_tmp = config.pictures.poster_tmp_path + slug_movie + '.' + ext;        
+      var url_cover_local = config.pictures.poster_cover_path + slug_movie + '.' + ext;    
+      var url_thumbnail_local = config.pictures.poster_thumb_path + slug_movie + '.' + ext;  
+      var url_illu = config.pictures.illustration_path + slug_movie + '.png'; 
+      //console.log(url_tmp);
+      //console.log(url_distant);
+      //console.log(url_cover_local);
+      //console.log(url_thumbnail_local);
+      //console.log(url_illu);
+
+      https.request(url_distant, function(response) {                                        
+        var data = new Stream();                                                    
+
+        response.on('data', function(chunk) {                                       
+          data.push(chunk);                                                         
+        });                                                                         
+
+        response.on('end', function() {       
+
+          fs.writeFile(url_tmp, data.read()); 
+
+          // Resize cover picture
+          gm(url_tmp)
+            .resize('1000', '563', '^')
+            .gravity('Center')
+            .crop('1000', '563')
+            .write(url_cover_local, function (err) {
+              if (err) {console.log(err)}
+              else{console.log('Crop Cover -> Done !')};
+            });  
+
+          gm(url_tmp)
+            .resize('150', '225', '^')
+            .write(url_thumbnail_local, function (err) {
+              if (err) {console.log(err)}
+              else{console.log('Crop Thumbnail -> Done !')};
+            });  
+                            
+        });                                                                         
+      }).end();
+
+
+    
+      //console.log(cast.crew);
+
       var result = new Movie({ id_themoviedb: this.request.body.id_themoviedb, 
                                  slug: this.request.body.slug,
+                                 title: info.original_title,
+                                 overview: info.overview,
+                                 genres: info.genres,
+                                 budget: info.budget,
+                                 revenue: info.revenue,
+                                 release_date: info.release_date,
                                  index_1: this.request.body.index_1,
                                  index_2: this.request.body.index_2,
                                  index_3: this.request.body.index_3,
-                                 picto: this.request.body.picto 
+                                 illu: config.app.url + '/' + url_illu,
+                                 cover: config.app.url + '/' + url_cover_local,
+                                 thumbnail: config.app.url + '/' + url_thumbnail_local,
+                                 crew: cast.crew,
+                                 cast: cast.cast
                                });
       result = yield result.save();
       this.status = 200;
@@ -398,7 +454,6 @@ ctrl.post = function *(next){
  *          "index_1": "",
  *          "index_2": "",
  *          "index_3": "",
- *          "picto": "hamlet.png",
  *          "_id": "5731d3fb8d476abe2445b03d",
  *          "created": "2016-05-10T12:28:43.482Z"
  *        }
@@ -414,9 +469,9 @@ ctrl.put = function *(next, params, request){
                    index_1: this.request.body.index_1,
                    index_2: this.request.body.index_2,
                    index_3: this.request.body.index_3,
-                   picto: this.request.body.picto,
                    updated: new Date
                   };
+
     result = yield Movie.findByIdAndUpdate(this.params.id, request, {new: true}).exec();
     //console.log(result);
     if (result == null) {

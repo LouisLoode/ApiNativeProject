@@ -10,11 +10,38 @@ var MovieSchema = new Schema({
   slug: {
         type: String,
         required: true,
+        unique: true
   },
-  picto: {
+  title: {
+        type: String,
+        required: true,
+  },
+  illu: {
+        type: String,
+        required: true,
+        unique: true
+  },  
+  cover: {
         type: String,
         required: true
-    },  
+  },  
+  thumbnail: {
+        type: String,
+        required: true
+  },  
+  release_date: {
+        type: Date
+  },
+  genres: [{
+    id : { type: Number, required: true},
+    name : { type: String, required: true}
+  }],  
+  budget: {
+        type: Number
+  },  
+  revenue: {
+        type: Number
+  },
   index_1: {
         type: String,
         required: true
@@ -27,6 +54,22 @@ var MovieSchema = new Schema({
         type: String,
         required: true
   },
+  crew: [{
+    credit_id : { type: String, required: true},
+    department : { type: String, required: true},
+    id : { type: Number, required: true},
+    job : { type: String, required: true},
+    name : { type: String, required: true}
+  }],  
+  cast: [{
+    cast_id : { type: Number, required: true},
+    character : { type: String },
+    credit_id : { type: String, required: true},
+    id : { type: String, required: true},
+    name : { type: String, required: true},
+    order : { type: Number, required: true},
+    profile_path : { type: String}
+  }],  
   created: {
         type: Date,
         default: Date.now

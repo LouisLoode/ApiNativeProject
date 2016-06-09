@@ -38,8 +38,7 @@ module.exports = function(app, config) {
   // Users
   router.get('/users', userController.list);
   router.get('/user/:id', userController.get);
-  router.post('/user', userController.post);
-  router.put('/user/:id', userController.put);
+  router.get('/user', userController.post);
   router.del('/user/:id', userController.del);
 
   // Scores
