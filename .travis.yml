@@ -5,6 +5,8 @@ addons:
   apt:
     packages:
     - sshpass
+    - graphicsmagick
+    - imagemagick
 env:
   global:
   - NODE_ENV=test

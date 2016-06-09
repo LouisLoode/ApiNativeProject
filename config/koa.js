@@ -58,7 +58,7 @@ module.exports = function(app, config) {
   app.use(bodyParser());
   
   // Check if user use a valid UUID for API
-  app.use(function *(next){
+  /*app.use(function *(next){
     var appReqPath = path.dirname(this.request.url);
     //console.log(appReqPath);
     if(appReqPath === '/assets/posters/cover' || appReqPath === '/assets/posters/thumbnails' || appReqPath === '/assets/actors/thumbnails'){
@@ -75,7 +75,7 @@ module.exports = function(app, config) {
         this.response.body = 'Invalid UUID';
       }
     }
-  });
+  });*/
 
   app.use(responseTime());
 

@@ -45,8 +45,7 @@ $ apidoc -i ./api/controllers/ -o ./doc/dist/ -t ./doc/template/
 
 ### Todos
 
- - Add Oauth2 authentification or Hawk auth
- - Logger strategy (winston)
+
 
 License
 ----
