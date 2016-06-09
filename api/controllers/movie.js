@@ -390,6 +390,8 @@ ctrl.post = function *(next){
       //console.log(url_thumbnail_local);
       //console.log(url_illu);
 
+  if (config.app.env !== 'test') {
+  
       https.request(url_distant, function(response) {                                        
         var data = new Stream();                                                    
 
@@ -424,7 +426,7 @@ ctrl.post = function *(next){
                             
         });                                                                         
       }).end();
-
+}
 
     
       //console.log(cast.crew);
