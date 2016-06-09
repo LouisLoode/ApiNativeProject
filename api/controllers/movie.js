@@ -158,8 +158,23 @@ ctrl.state = function *(next){
  *          "index_1": "",
  *          "index_2": "",
  *          "index_3": "",
- *          "_id": "572f7196e002358e0e7e5c91",
- *          "created": "2016-05-08T17:04:22.923Z",
+ *          "_id": "5731d3fb8d476abe2445b03d",
+ *          "slug": "",
+ *          "title": "info.original_title",
+ *          "overview": "info.overview",
+ *          "genres": "info.genres",
+ *          "budget": "info.budget",
+ *          "revenue": "info.revenue",
+ *          "release_date": "info.release_date",
+ *          "index_1": "this.request.body.index_1",
+ *          "index_2": "this.request.body.index_2",
+ *          "index_3": "this.request.body.index_3",
+ *          "illu": "config.app.url + '/' + url_illu",
+ *          "cover": "config.app.url + '/' + url_cover_local",
+ *          "thumbnail": "config.app.url + '/' + url_thumbnail_local",
+ *          "crew": "cast.crew",
+ *          "cast": "cast.cast",
+ *          "created": "2016-05-08T17:04:22.923Z"
  *          "updated": "2016-05-08T17:04:22.923Z"
  *        }
  *      }
@@ -292,6 +307,21 @@ ctrl.get = function *(next, params) {
  *          "index_2": "",
  *          "index_3": "",
  *          "_id": "5731d3fb8d476abe2445b03d",
+ *          "slug": "",
+ *          "title": "info.original_title",
+ *          "overview": "info.overview",
+ *          "genres": "info.genres",
+ *          "budget": "info.budget",
+ *          "revenue": "info.revenue",
+ *          "release_date": "info.release_date",
+ *          "index_1": "this.request.body.index_1",
+ *          "index_2": "this.request.body.index_2",
+ *          "index_3": "this.request.body.index_3",
+ *          "illu": "config.app.url + '/' + url_illu",
+ *          "cover": "config.app.url + '/' + url_cover_local",
+ *          "thumbnail": "config.app.url + '/' + url_thumbnail_local",
+ *          "crew": "cast.crew",
+ *          "cast": "cast.cast"
  *          "created": "2016-05-10T12:28:43.482Z"
  *        }
  *      }
@@ -387,6 +417,11 @@ ctrl.post = function *(next){
               if (err) {console.log(err)}
               else{console.log('Crop Thumbnail -> Done !')};
             });  
+
+          /*fs.unlink(url_tmp,function(err){
+              if(err) return console.log(err);
+              console.log('temporary file deleted successfully');
+          })*/
                             
         });                                                                         
       }).end();
@@ -515,6 +550,7 @@ ctrl.del = function *(next, params){
   var error, result;
   try {
     result = yield Movie.remove({ _id: this.params.id }).exec();
+
     return this.body = result;
   } catch (error) {
     this.status = 400;

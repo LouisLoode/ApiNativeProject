@@ -9,3 +9,9 @@ config/production.js
 config/config.js
 tests/node_modules
 npm-debug.log
+!/public/illus/
+!/public/tmp/actors
+!/public/tmp/posters
+!/public/posters/cover
+!/public/posters/thumbnails
+/public/*
