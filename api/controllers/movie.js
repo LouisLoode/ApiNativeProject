@@ -405,15 +405,21 @@ ctrl.post = function *(next){
           fs.writeFile('public/'+url_tmp, data.read()); 
 
           // Resize cover picture
+          console.log(url_cover_local);
           gm('public/'+url_tmp)
             .resize('1000', '563', '^')
             .gravity('Center')
             .crop('1000', '563')
             .write('public/'+url_cover_local, function (err) {
-              if (err) {console.log(err)}
-              else{console.log('Crop Cover -> Done !')}
+              if (err) {
+                console.log(err);
+              } else{
+               console.log('Crop Cover -> Done !');
+               
+              }
             });  
 
+          console.log(url_thumbnail_local);
           gm('public/'+url_tmp)
             .resize('150', '225', '^')
             .write('public/'+url_thumbnail_local, function (err) {
