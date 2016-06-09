@@ -569,11 +569,11 @@ ctrl.del = function *(next, params){
       //console.log(result_get);
       var filename = path.parse(result_get).base;
       //console.log(filename);
-
+if (config.app.env !== 'test') {
       fs.unlinkSync('public/posters/cover/'+ filename);
       fs.unlinkSync('public/posters/thumbnails/'+ filename);
       fs.unlinkSync('public/tmp/posters/'+ filename);
-
+}
       
       this.status = 200;
       return this.body = result_del;
