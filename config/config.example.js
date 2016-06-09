@@ -21,12 +21,12 @@ var specific = {
       keys: [ 'super-secret' ],
     },
     pictures: {
-      illustration_path: 'public/illus/',
-      poster_tmp_path: 'public/tmp/posters/',
-      poster_cover_path: 'public/posters/cover/',
-      poster_thumb_path: 'public/posters/thumbnails/',
-      actors_tmp_path: 'public/tmp/actors/',
-      actors_thumb_path: 'public/actors/thumbnails/'
+      illustration_path: 'illus/',
+      poster_tmp_path: 'tmp/posters/',
+      poster_cover_path: 'posters/cover/',
+      poster_thumb_path: 'posters/thumbnails/',
+      actors_tmp_path: 'tmp/actors/',
+      actors_thumb_path: 'actors/thumbnails/'
     },
     mongo: {
       user: '',
@@ -48,12 +48,12 @@ var specific = {
       keys: [ 'super-secret' ],
     },
     pictures: {
-      illustration_path: 'public/illus/',
-      poster_tmp_path: 'public/tmp/posters/',
-      poster_cover_path: 'public/posters/cover/',
-      poster_thumb_path: 'public/posters/thumbnails/',
-      actors_tmp_path: 'public/tmp/actors/',
-      actors_thumb_path: 'public/actors/thumbnails/'
+      illustration_path: 'illus/',
+      poster_tmp_path: 'tmp/posters/',
+      poster_cover_path: 'posters/cover/',
+      poster_thumb_path: 'posters/thumbnails/',
+      actors_tmp_path: 'tmp/actors/',
+      actors_thumb_path: 'actors/thumbnails/'
     },
     mongo: {
       user: '',
@@ -75,12 +75,12 @@ var specific = {
       keys: [ 'super-secret' ],
     },
     pictures: {
-      illustration_path: 'public/illus/',
-      poster_tmp_path: 'public/tmp/posters/',
-      poster_cover_path: 'public/posters/cover/',
-      poster_thumb_path: 'public/posters/thumbnails/',
-      actors_tmp_path: 'public/tmp/actors/',
-      actors_thumb_path: 'public/actors/thumbnails/'
+      illustration_path: 'illus/',
+      poster_tmp_path: 'tmp/posters/',
+      poster_cover_path: 'posters/cover/',
+      poster_thumb_path: 'posters/thumbnails/',
+      actors_tmp_path: 'tmp/actors/',
+      actors_thumb_path: 'actors/thumbnails/'
     },
     mongo: {
       user: '',

@@ -399,29 +399,28 @@ ctrl.post = function *(next){
 
         response.on('end', function() {       
 
-          fs.writeFile(url_tmp, data.read()); 
+          fs.writeFile('public/'+url_tmp, data.read()); 
 
           // Resize cover picture
-          gm(url_tmp)
+          gm('public/'+url_tmp)
             .resize('1000', '563', '^')
             .gravity('Center')
             .crop('1000', '563')
-            .write(url_cover_local, function (err) {
+            .write('public/'+url_cover_local, function (err) {
               if (err) {console.log(err)}
               else{console.log('Crop Cover -> Done !')};
             });  
 
-          gm(url_tmp)
+          gm('public/'+url_tmp)
             .resize('150', '225', '^')
-            .write(url_thumbnail_local, function (err) {
+            .write('public/'+url_thumbnail_local, function (err) {
               if (err) {console.log(err)}
-              else{console.log('Crop Thumbnail -> Done !')};
+              else{console.log('Crop Thumbnail -> Done !')
+            fs.unlinkSync('public/'+url_tmp);};
             });  
 
-          /*fs.unlink(url_tmp,function(err){
-              if(err) return console.log(err);
-              console.log('temporary file deleted successfully');
-          })*/
+   
+
                             
         });                                                                         
       }).end();
@@ -441,9 +440,9 @@ ctrl.post = function *(next){
                                  index_1: this.request.body.index_1,
                                  index_2: this.request.body.index_2,
                                  index_3: this.request.body.index_3,
-                                 illu: config.app.url + '/' + url_illu,
-                                 cover: config.app.url + '/' + url_cover_local,
-                                 thumbnail: config.app.url + '/' + url_thumbnail_local,
+                                 illu: config.app.url + '/assets/' + url_illu,
+                                 cover: config.app.url + '/assets/' + url_cover_local,
+                                 thumbnail: config.app.url + '/assets/' + url_thumbnail_local,
                                  crew: cast.crew,
                                  cast: cast.cast
                                });
@@ -549,9 +548,24 @@ ctrl.del = function *(next, params){
   yield next;
   var error, result;
   try {
+
+        //console.log(this.params.id);
+    result = yield Movie.findOne({ '_id': this.params.id}, outputFieldsSecurity).exec();
+    //console.log(result);
+    if (result == null) {
+      this.status = 404;
+    } else {
+
     result = yield Movie.remove({ _id: this.params.id }).exec();
 
-    return this.body = result;
+    /*var filePath = "c:/book/discovery.docx" ; 
+    fs.unlinkSync(filePath);*/
+      
+      this.status = 200;
+      return this.body = result;
+    }
+
+
   } catch (error) {
     this.status = 400;
     return this.body = error;
