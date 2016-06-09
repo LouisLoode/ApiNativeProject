@@ -9,9 +9,14 @@ config/production.js
 config/config.js
 tests/node_modules
 npm-debug.log
+
+public/illus/*
 !/public/illus/
+public/tmp/actors/*
 !/public/tmp/actors
+public/tmp/posters/*
 !/public/tmp/posters
+public/posters/cover/*
 !/public/posters/cover
+public/posters/thumbnails/*
 !/public/posters/thumbnails
-/public/*
