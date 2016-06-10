@@ -527,15 +527,8 @@ ctrl.post = function *(next){
 
                     };
                     //console.log(cast.cast);
-
-
-
 */
-      
-
 //}
-    
-
       var result = new Movie({ id_themoviedb: this.request.body.id_themoviedb, 
                                  slug: this.request.body.slug,
                                  title: info.original_title,
