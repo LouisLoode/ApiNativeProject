@@ -17,37 +17,48 @@ KoApi uses a number of open source projects to work properly:
 
 You need to install NodeJS dependancies:
 ```sh
-$ sudo npm install
+sudo npm install
 ```
 
 Need to copy and configure the config file:
 ```sh
-$ cp ./config/config.example.js ./config/config.js 
+cp ./config/config.example.js ./config/config.js 
 ```
 
 Run app in dev mode (need [Nodemon]):
 ```sh
-$ nodemon server.js
+nodemon server.js
 ```
 
 Run app in prod mode (need [Forever]):
 ```sh
-$ npm start
+npm start
 ```
 
 ### Run test units
 ```sh
-$ npm test
+npm test
 ```
 
 ### Generate documentation
 ```sh
-$ apidoc -i ./api/controllers/ -o ./doc/dist/ -t ./doc/template/
+apidoc -i ./api/controllers/ -o ./doc/dist/ -t ./doc/template/
 ```
 ### Fix GM binaries dependancies
 ```sh
-$ npm test
+npm test
 ```
+
+### Import array of movies for production
+```sh
+NODE_ENV=production npm run db:import
+```
+
+### Import array of movies for dev
+```sh
+npm run db:import
+```
+
 
 
 ### Todos

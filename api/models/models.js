@@ -6,6 +6,7 @@ var MovieSchema = new Schema({
   id_themoviedb: {
         type: Number,
         required: true,
+        unique: true
     },
   slug: {
         type: String,
