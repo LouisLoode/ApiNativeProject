@@ -1,5 +1,8 @@
 # ApiNativeProject
 
+### Status
+[![Build Status](https://travis-ci.org/LouisLoode/api-native-project.svg?branch=master)](https://travis-ci.org/LouisLoode/api-native-project)
+
 ### Version
 0.1.0
 
@@ -29,7 +32,7 @@ $ nodemon server.js
 
 Run app in prod mode (need [Forever]):
 ```sh
-$ forever start server.js
+$ npm start
 ```
 
 ### Run test units
@@ -41,10 +44,14 @@ $ npm test
 ```sh
 $ apidoc -i ./api/controllers/ -o ./doc/dist/ -t ./doc/template/
 ```
+### Fix GM binaries dependancies
+```sh
+$ npm test
+```
 
 
 ### Todos
-
+...
 
 
 License

@@ -248,9 +248,24 @@ ctrl.list = function *(next){
  *          "index_1": "",
  *          "index_2": "",
  *          "index_3": "",
- *          "_id": "572f7196e002358e0e7e5c91",
- *          "created": "2016-05-08T17:04:22.923Z",
- *          "updated": "2016-05-08T17:04:22.923Z",
+ *          "_id": "5731d3fb8d476abe2445b03d",
+ *          "slug": "",
+ *          "title": "info.original_title",
+ *          "overview": "info.overview",
+ *          "genres": "info.genres",
+ *          "budget": "info.budget",
+ *          "revenue": "info.revenue",
+ *          "release_date": "info.release_date",
+ *          "index_1": "this.request.body.index_1",
+ *          "index_2": "this.request.body.index_2",
+ *          "index_3": "this.request.body.index_3",
+ *          "illu": "config.app.url + '/' + url_illu",
+ *          "cover": "config.app.url + '/' + url_cover_local",
+ *          "thumbnail": "config.app.url + '/' + url_thumbnail_local",
+ *          "crew": "cast.crew",
+ *          "cast": "cast.cast",
+ *          "created": "2016-05-08T17:04:22.923Z"
+ *          "updated": "2016-05-08T17:04:22.923Z"
  *        }
  *      }
  *
@@ -401,6 +416,11 @@ ctrl.post = function *(next){
       //console.log(url_cover_local);
       //console.log(url_thumbnail_local);
       //console.log(url_illu);
+
+  // Absolutly not good
+  if (config.app.env !== 'test') {
+
+
        https.request(url_distant, function(response) {                                        
         var data = new Stream();                                                    
 
@@ -413,29 +433,29 @@ ctrl.post = function *(next){
           fs.writeFile('public/'+url_tmp, data.read()); 
 
         // Resize cover picture
-        gm('public/'+url_tmp)
-          .resize('1000', '563', '^')
-          .gravity('Center')
-          .crop('1000', '563')
-          .write('public/'+url_cover_local, function (err) {
-            if (err) {
-              console.log(err);
-            } else{
-             console.log('Crop Cover -> Done : '+url_cover_local);
+          gm('public/'+url_tmp)
+            .resize('1000', '563', '^')
+            .gravity('Center')
+            .crop('1000', '563')
+            .write('public/'+url_cover_local, function (err) {
+              if (err) {
+                console.log(err);
+              } else{
 
-            
-            gm('public/'+url_tmp)
-              .resize('150', '225', '^')
-              .write('public/'+url_thumbnail_local, function (err) {
-                if (err) {
-                  console.log(err);
-                } else{
-                 console.log('Crop Thumbnail -> Done : '+url_thumbnail_local);
-                 
-                }
-              });  
-             
-            }
+               console.log('Crop Cover -> Done : ' + url_cover_local);
+
+                gm('public/'+url_tmp)
+                  .resize('150', '225', '^')
+                  .write('public/'+url_thumbnail_local, function (err) {
+                    if (err) {
+                      console.log(err);
+                    } else{
+                     console.log('Crop Thumbnail -> Done : '+url_thumbnail_local);
+                     
+                    }
+                  });  
+               
+              }
           }); 
    
 
@@ -498,7 +518,7 @@ ctrl.post = function *(next){
             });  
       };
       //console.log(cast.cast);
-
+}
     
 
       var result = new Movie({ id_themoviedb: this.request.body.id_themoviedb, 
@@ -543,7 +563,6 @@ ctrl.post = function *(next){
  * @apiParam {String} index_1  index 1 of the movie.
  * @apiParam {String} index_2  index 2 of the movie.
  * @apiParam {String} index_3  index 1 of the movie. 
- * @apiParam {String} picto  pictogram name's of the movie.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
