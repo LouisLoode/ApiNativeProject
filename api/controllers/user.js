@@ -17,6 +17,12 @@ var outputFieldsSecurity = 'uuid scores created updated';
  * @apiGroup Users
  * @apiVersion 0.1.0
  *
+ * @apiDescription Get all documents, or documents that match the query. 
+ * You can use mongoose find conditions, limit, skip and sort.
+ * For example: 
+ * /api/users?conditions={"name":"john"}&limit=10&skip=1&sort=-zipcode
+ *
+ *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *      {

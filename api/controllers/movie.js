@@ -1,5 +1,6 @@
 'use strict';
-
+var url = require('url');
+//var http = require('http');
 var https = require('https');                                                
 var Stream = require('stream').Transform;                                
 var fs = require('fs'); 
@@ -8,6 +9,7 @@ var path = require('path');
 
 var request = require('koa-request');
 var arrayDiff = require('simple-array-diff');
+var sizeOf = require('image-size');
 var config = require('../../config/config');
 
 var messages = require('../models/models');
@@ -154,6 +156,11 @@ ctrl.state = function *(next){
  * @apiName ShowAllMovies
  * @apiGroup Movies
  * @apiVersion 0.1.0
+ *
+ * @apiDescription Get all documents, or documents that match the query. 
+ * You can use mongoose find conditions, limit, skip and sort.
+ * For example: 
+ * /api/users?conditions={"name":"john"}&limit=10&skip=1&sort=-zipcode
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -418,7 +425,7 @@ ctrl.post = function *(next){
       //console.log(url_illu);
 
   // Absolutly not good
-  if (config.app.env !== 'test') {
+  //if (config.app.env !== 'test') {
 
 
        https.request(url_distant, function(response) {                                        
@@ -430,97 +437,98 @@ ctrl.post = function *(next){
 
         response.on('end', function() {       
 
-          fs.writeFile('public/'+url_tmp, data.read()); 
+          fs.writeFile('public/'+url_tmp, data.read(), function(err) {
+              if(err) {
+                  return console.log(err);
+              }                  
 
-        // Resize cover picture
-          gm('public/'+url_tmp)
-            .resize('1000', '563', '^')
-            .gravity('Center')
-            .crop('1000', '563')
-            .write('public/'+url_cover_local, function (err) {
-              if (err) {
-                console.log(err);
-              } else{
+            // Resize cover picture
+              gm('public/'+url_tmp)
+                .resize('1000', '563', '^')
+                .gravity('Center')
+                .crop('1000', '563')
+                .write('public/'+url_cover_local, function (err) {
+                  if (err) {
+                    console.log(err);
+                  } else{
 
-               console.log('Crop Cover -> Done : ' + url_cover_local);
+                   console.log('Crop Cover -> Done : ' + url_cover_local);
 
-                gm('public/'+url_tmp)
-                  .resize('150', '225', '^')
-                  .write('public/'+url_thumbnail_local, function (err) {
-                    if (err) {
-                      console.log(err);
-                    } else{
-                     console.log('Crop Thumbnail -> Done : '+url_thumbnail_local);
-                     
-                    }
-                  });  
-               
-              }
-          }); 
-   
-
-                            
+                    gm('public/'+url_tmp)
+                      .resize('150', '225', '^')
+                      .write('public/'+url_thumbnail_local, function (err) {
+                        if (err) {
+                          console.log(err);
+                        } else{
+                         console.log('Crop Thumbnail -> Done : '+url_thumbnail_local);
+                         
+                        }
+                      });  
+                  }
+              });                   
+            }); 
         });                                                                         
       }).end();
 
+/*
+                   var urls_actors = [];
+                    for (var i = 0; i<cast.cast.length; i++) {
+                      if(cast.cast[i].profile_path !== null){
+                        urls_actors[i] = {profile_id: cast.cast[i].id, profile_path: cast.cast[i].profile_path};
+                      }
+                    };
 
-    // Resize cover picture
-    gm(url_distant)
-      .resize('1000', '563', '^')
-      .gravity('Center')
-      .crop('1000', '563')
-      .write('public/'+url_cover_local, function (err) {
-        if (err) {
-          console.log(err);
-        } else{
-         console.log('Crop Cover -> Done : '+url_cover_local);
+                  var actors = cleanArray(urls_actors);
 
-        
-        gm(url_distant)
-          .resize('150', '225', '^')
-          .write('public/'+url_thumbnail_local, function (err) {
-            if (err) {
-              console.log(err);
-            } else{
-             console.log('Crop Thumbnail -> Done : '+url_thumbnail_local);
-             
-            }
-          });  
-         
-        }
-      });  
+                  //console.log(actors.length);      
+                  //console.log(actors);  
+                  
+                    for (var i = 0; i<actors.length; i++) {
 
-      
-      var urls_actors = [];
-      for (var i = 0; i<cast.cast.length; i++) {
-        if(cast.cast[i].profile_path !== null){
-          urls_actors[i] = {profile_id: cast.cast[i].id, profile_path: cast.cast[i].profile_path};
-        }
-      };
 
-    var actors = cleanArray(urls_actors);
+                      var url_actor_distant = 'https://image.tmdb.org/t/p/original' + actors[i].profile_path;   
+                      var url_actor_tmp_local = config.pictures.actors_tmp_path + actors[i].profile_id + '.jpg';   
+                      var url_actor_thumbnail_local = config.pictures.actors_thumb_path + actors[i].profile_id + '.jpg';
+                        console.log(url_actor_distant);
+                        console.log(actors[i].profile_id);
 
-    //console.log(actors.length);      
-    
-      for (var i = 0; i<actors.length; i++) {
+                              https.request(url_actor_distant, function(response) {                                        
+                              var data = new Stream();                                                    
+                              
+                              response.on('data', function(chunk) {                                       
+                                data.push(chunk);                                                         
+                              });                                                                         
 
-           var url_actor_distant = 'https://image.tmdb.org/t/p/original' + actors[i].profile_path;      
-           var url_actor_thumbnail_local = config.pictures.actors_thumb_path + actors[i].profile_id + '.jpg';        
-          
+                              response.on('end', function() {       
 
-      // Resize cover picture
-          gm(url_actor_distant)
-            .resize('150', '225', '^')
-            .write('public/'+url_actor_thumbnail_local, function (err) {
-                if (err) {
-                  console.log(err);
-                }
-            });  
-      };
-      //console.log(cast.cast);
-}
-    
+                                fs.writeFile('public/'+url_actor_tmp_local, data.read(), function(err) {
+                                    if(err) {
+                                        return console.log(err);
+                                    }else{
+                                      console.log('Crop Actor Thumbnail -> Done : ' + url_actor_thumbnail_local);
+                                                              console.log(url_actor_distant);
+                        console.log(actors[i].profile_id);
 
+                                      gm('public/'+url_actor_tmp_local)
+                                        .resize('150', '225', '^')
+                                        .write('public/'+url_actor_thumbnail_local, function (err) {
+                                          if (err) {
+                                            console.log(err);
+                                          } else{
+                                           //console.log('Crop Actor Thumbnail -> Done : ' + url_actor_thumbnail_local);
+                                          }
+                                      }); 
+                                    } 
+                                });
+                                             
+                              });                                                                         
+                            }).end();
+
+
+                    };
+                    //console.log(cast.cast);
+*/
+//}
       var result = new Movie({ id_themoviedb: this.request.body.id_themoviedb, 
                                  slug: this.request.body.slug,
                                  title: info.original_title,

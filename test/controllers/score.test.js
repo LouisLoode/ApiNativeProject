@@ -56,7 +56,7 @@ describe('CRUD Score',function(){
   });
 
   it('post a movie',function(done){
-      this.timeout(20000);
+      this.timeout(50000);
     // calling home page api
     server
     request()
@@ -79,11 +79,13 @@ describe('CRUD Score',function(){
         id_movie = res.body.data._id
         //console.log(id);
         done();
+
     });
   });
 
+
   it('post a score',function(done){
-      this.timeout(5000);
+      this.timeout(50000);
     // calling home page api
     server
     request()
@@ -103,24 +105,6 @@ describe('CRUD Score',function(){
         expect(res.body.meta.code).to.eql(200)  
         id_score = res.body.data._id
         //console.log(id);
-        done();
-    });
-  });
-
-  it('get a score - 200',function(done){
-    this.timeout(5000);
-    server
-    request()
-    .get('/api/score/' + id_score)
-    .set('X-app-UUID', randomUUID)
-    .set('Content-Type', 'application/json')
-    .end(function(err,res){
-        //console.log(res.body)
-        expect(res.body).to.not.be.empty();
-        expect(typeof res.body).to.eql('object')
-        expect(res.body.data).to.have.key('_id');
-        expect(res.body.data._id).to.eql(id_score) 
-        expect(res.body.meta.code).to.eql(200)       
         done();
     });
   });
