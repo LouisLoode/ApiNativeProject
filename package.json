@@ -10,8 +10,12 @@
       "email": "louisdebraine@gmail.com"
     }
   ],
+  "bin": {
+    "import": "./bin/migrate.js"
+  },
   "private": false,
   "scripts": {
+    "db:import": "node ./config/import/import.js",
     "test": "NODE_ENV=test ./node_modules/.bin/mocha 'test/**/*.js' --reporter spec",
     "start": "NODE_ENV=production forever start server.js",
     "stop": "forever stop server.js"
@@ -30,6 +34,7 @@
     "API"
   ],
   "dependencies": {
+    "extend": "^3.0.0",
     "forever": "^0.15.2",
     "gm": "^1.22.0",
     "image-size": "^0.5.0",
@@ -49,6 +54,7 @@
     "koa-static": "^2.0.0",
     "lodash": "~4.12.0",
     "mongoose": "git://github.com/LearnBoost/mongoose",
+    "request": "^2.72.0",
     "simple-array-diff": "^1.1.0",
     "winston": "~2.1.1"
   },

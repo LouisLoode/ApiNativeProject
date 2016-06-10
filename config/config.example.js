@@ -16,6 +16,7 @@ var specific = {
   development: {
     app: {
       url: 'http://localhost:3000',
+      server: 'localhost',
       port: 3000,
       name: 'ApiNativeProject - Dev',
       keys: [ 'super-secret' ],
@@ -43,6 +44,7 @@ var specific = {
   test: {
     app: {
       url: 'http://localhost:3001',
+      server: 'localhost',
       port: 3001,
       name: 'ApiNativeProject - Test ',
       keys: [ 'super-secret' ],
@@ -70,6 +72,7 @@ var specific = {
   production: {
     app: {
       url: 'http://localhost:3000',
+      server: 'localhost',
       port: process.env.PORT || 3000,
       name: 'ApiNativeProject',
       keys: [ 'super-secret' ],
