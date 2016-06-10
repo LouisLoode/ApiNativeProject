@@ -10,7 +10,7 @@ var config = require('../../config/config');
 
 var randomUUID = faker.random.uuid();
 var randomId = '293660';
-var randomSlug = faker.name.lastName();
+var randomSlug = 'deadpool';
 var randomImg = faker.image.image();
 
 var randomIndex_1 = faker.lorem.sentence();

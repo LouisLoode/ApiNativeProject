@@ -9,9 +9,9 @@ faker.locale = 'fr';
 var config = require('../../config/config');
 
 var randomUUID = faker.random.uuid();
-var randomId = '550';
+var randomId = '299687';
 var randomScore = faker.random.number();
-var randomSlug = faker.name.lastName();
+var randomSlug = 'the-5th-wave';
 var randomImg = faker.image.image();
 
 //var randomIndex_1 = faker.lorem.sentence();
