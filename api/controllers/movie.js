@@ -21,6 +21,7 @@ var Score = mongoose.model('Score');
 var ctrl = module.exports = {};
 
 var outputFieldsSecurity = 'title slug id_themoviedb overview genres budget revenue release_date index_1 index_2 index_3 illu cover thumbnail created updated cast crew';
+var outputFieldsSecurityScores = 'id_movie id_user title thumbnail score created';
 
 function cleanArray(actual) {
   var newArray = new Array();
@@ -62,32 +63,29 @@ function cleanArray(actual) {
  */
 ctrl.success = function *(next){
   yield next;
-  var error, result_score, result_user;
+  var error, result_movie, result_score, result_user;
   var user_uuid = this.request.get('X-app-UUID');
   var condition = {'uuid':user_uuid};
   //console.log(user_uuid);
+  //console.log(condition);
 
   try {
     var result_user = yield User.find(condition).exec();
     var id_user = result_user[0]._id;
     //console.log(id_user);
-    try{
       var condition = {'id_user':id_user};
-      var result_score = yield Score.find(condition).exec();
+      var result_score = yield Score.find(condition, outputFieldsSecurityScores).exec();
       //console.log(result_score);
 
       var movies = [];
       for (var i = 0; i<result_score.length; i++) {
-      movies[i] = result_score[i].id_movie;
+        //console.log(result_score[i].id_movie);
+        movies[i] = result_score[i];  
       };
 
       //console.log(movies);
 
       return this.body = movies;
-    } catch (erro){
-     this.status = 500;
-    return this.body = error;
-    }
   } catch (error) {
      this.status = 500;
     return this.body = error;
@@ -174,10 +172,6 @@ ctrl.state = function *(next){
  *        "data": {
  *          "id_themoviedb": "23383",
  *          "slug": "hamlet",
- *          "illu": "hamlet.png",
- *          "index_1": "",
- *          "index_2": "",
- *          "index_3": "",
  *          "_id": "5731d3fb8d476abe2445b03d",
  *          "slug": "",
  *          "title": "info.original_title",
@@ -251,10 +245,6 @@ ctrl.list = function *(next){
  *        "data": {
  *          "id_themoviedb": "23383",
  *          "slug": "hamlet",
- *          "illu": "hamlet.png",
- *          "index_1": "",
- *          "index_2": "",
- *          "index_3": "",
  *          "_id": "5731d3fb8d476abe2445b03d",
  *          "slug": "",
  *          "title": "info.original_title",
@@ -469,65 +459,6 @@ ctrl.post = function *(next){
             }); 
         });                                                                         
       }).end();
-
-/*
-                   var urls_actors = [];
-                    for (var i = 0; i<cast.cast.length; i++) {
-                      if(cast.cast[i].profile_path !== null){
-                        urls_actors[i] = {profile_id: cast.cast[i].id, profile_path: cast.cast[i].profile_path};
-                      }
-                    };
-
-                  var actors = cleanArray(urls_actors);
-
-                  //console.log(actors.length);      
-                  //console.log(actors);  
-                  
-                    for (var i = 0; i<actors.length; i++) {
-
-
-                      var url_actor_distant = 'https://image.tmdb.org/t/p/original' + actors[i].profile_path;   
-                      var url_actor_tmp_local = config.pictures.actors_tmp_path + actors[i].profile_id + '.jpg';   
-                      var url_actor_thumbnail_local = config.pictures.actors_thumb_path + actors[i].profile_id + '.jpg';
-                        console.log(url_actor_distant);
-                        console.log(actors[i].profile_id);
-
-                              https.request(url_actor_distant, function(response) {                                        
-                              var data = new Stream();                                                    
-                              
-                              response.on('data', function(chunk) {                                       
-                                data.push(chunk);                                                         
-                              });                                                                         
-
-                              response.on('end', function() {       
-
-                                fs.writeFile('public/'+url_actor_tmp_local, data.read(), function(err) {
-                                    if(err) {
-                                        return console.log(err);
-                                    }else{
-                                      console.log('Crop Actor Thumbnail -> Done : ' + url_actor_thumbnail_local);
-                                                              console.log(url_actor_distant);
-                        console.log(actors[i].profile_id);
-
-                                      gm('public/'+url_actor_tmp_local)
-                                        .resize('150', '225', '^')
-                                        .write('public/'+url_actor_thumbnail_local, function (err) {
-                                          if (err) {
-                                            console.log(err);
-                                          } else{
-                                           //console.log('Crop Actor Thumbnail -> Done : ' + url_actor_thumbnail_local);
-                                          }
-                                      }); 
-                                    } 
-                                });
-                                             
-                              });                                                                         
-                            }).end();
-
-
-                    };
-                    //console.log(cast.cast);
-*/
 //}
       var result = new Movie({ id_themoviedb: this.request.body.id_themoviedb, 
                                  slug: this.request.body.slug,
