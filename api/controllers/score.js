@@ -6,10 +6,11 @@ var config = require('../../config/config');
 var messages = require('../models/models');
 var mongoose = require('mongoose');
 var Score = mongoose.model('Score');
+var Movie = mongoose.model('Movie');
 
 var ctrl = module.exports = {};
 
-var outputFieldsSecurity = 'id_movie id_user score created';
+var outputFieldsSecurity = 'id_movie id_user title thumbnail score created';
 
 /**
  * @api {get} /api/scores/ Get all the movies
@@ -35,6 +36,8 @@ var outputFieldsSecurity = 'id_movie id_user score created';
  *        "data": {
  *          "id_movie": "572f7196e002358e0e7e5c91",
  *          "id_user": "572f7196e002358e0e7e5c91",
+ *          "thumbnail": "URL",
+ *          "title": "Title",
  *          "score": "50",
  *          "_id": "572f7196e002358e0e7e5c91",
  *          "created": "2016-05-08T17:04:22.923Z"
@@ -93,6 +96,8 @@ ctrl.list = function *(next){
  *        "data": {
  *          "id_movie": "572f7196e002358e0e7e5c91",
  *          "id_user": "572f7196e002358e0e7e5c91",
+ *          "thumbnail": "URL",
+ *          "title": "Title",
  *          "score": "50",
  *          "_id": "572f7196e002358e0e7e5c91",
  *          "created": "2016-05-08T17:04:22.923Z"
@@ -156,6 +161,8 @@ ctrl.get = function *(next, params) {
  *          "id_themoviedb": "23383",
  *          "slug": "hamlet",
  *          "picto": "hamlet.png",
+ *          "thumbnail": "URL",
+ *          "title": "Title",
  *          "_id": "5731d3fb8d476abe2445b03d",
  *          "created": "2016-05-10T12:28:43.482Z"
  *        }
@@ -181,19 +188,43 @@ ctrl.post = function *(next){
     this.status = 400;
     return this.body = 'Missing the score';
   }else{
-    try {
-      var result = new Score({ id_movie: this.request.body.id_movie, 
-                                 id_user: this.request.body.id_user,
-                                 score: this.request.body.score 
-                               });
-      result = yield result.save();
-      this.status = 200;
-      this.body = result;
-    } catch (error) {
-      console.log(error);
-      this.status = 400;
-      return this.body = error.name;
-    }  
+
+
+
+
+  try {
+    //console.log(this.params.id);
+    var result_movie = yield Movie.findOne({ '_id': this.request.body.id_movie}).exec();
+    
+    //console.log(result);
+    if (result_movie == null) {
+      this.status = 404;
+    } else {
+
+      //console.log(result_movie.thumbnail);
+      //console.log(result_movie.title);
+      
+      try {
+        var result = new Score({ id_movie: this.request.body.id_movie, 
+                                   id_user: this.request.body.id_user,
+                                   title: result_movie.title,
+                                   thumbnail: result_movie.thumbnail,
+                                   score: this.request.body.score 
+                                 });
+        result = yield result.save();
+        this.status = 200;
+        this.body = result;
+      } catch (error) {
+        console.log(error);
+        this.status = 400;
+        return this.body = error.name;
+      } 
+    }
+  } catch (error) {
+    this.status = 404;
+    return this.body = error;
+  }
+ 
   }
 };
 

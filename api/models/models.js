@@ -83,20 +83,28 @@ var MovieSchema = new Schema({
 
 // set up a mongoose model
 var ScoreSchema = new Schema({
-  id_movie: {
+    id_movie: {
         type: String,
         required: true,
     },
-  id_user: {
+    id_user: {
         type: String,
         required: true,
     },
-  score: {
+    title: {
+        type: String,
+        required: true,
+    },
+    thumbnail: {
+          type: String,
+          required: true
+    },  
+    score: {
         type: Number,
         required: true,
         default: null
     },
-  created: {
+    created: {
         type: Date,
         default: null
     },
