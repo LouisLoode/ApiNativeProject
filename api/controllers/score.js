@@ -4,6 +4,8 @@ var request = require('koa-request');
 var config = require('../../config/config');
 
 var messages = require('../models/models');
+var slug = require('limax');
+
 var mongoose = require('mongoose');
 var Score = mongoose.model('Score');
 var Movie = mongoose.model('Movie');
@@ -146,7 +148,8 @@ ctrl.get = function *(next, params) {
  *
  * @apiParam {String} id_movie  id of the movie
  * @apiParam {String} id_user  id of the user
- * @apiParam {Number} score  score of the user for a movie.
+ * @apiParam {String} response  response of the user
+ * @apiParam {Number} nbr_index  nbr of index used by the user for find a movie.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -158,9 +161,9 @@ ctrl.get = function *(next, params) {
  *          "now": "2016-05-10T12:28:43.502Z"
  *        },
  *        "data": {
- *          "id_themoviedb": "23383",
- *          "slug": "hamlet",
- *          "picto": "hamlet.png",
+ *          "id_movie": "23383",
+ *          "id_user": "23383",
+ *          "score": "hamlet",
  *          "thumbnail": "URL",
  *          "title": "Title",
  *          "_id": "5731d3fb8d476abe2445b03d",
@@ -180,50 +183,62 @@ ctrl.post = function *(next){
     this.status = 400;
     return this.body = 'Missing ID movie';
   }
-  if (!this.request.body.id_user) {
+  if (!this.request.body.nbr_index) {
     this.status = 400;
-    return this.body = 'Missing ID user';
-  }
-  if (!this.request.body.score) {
+    return this.body = 'Missing the number of index used';
+  }if (this.request.body.nbr_index < 0 || this.request.body.nbr_index > 3) {
     this.status = 400;
-    return this.body = 'Missing the score';
+    return this.body = 'Unvalid number of index used';
   }else{
 
-
-
-
-  try {
-    //console.log(this.params.id);
-    var result_movie = yield Movie.findOne({ '_id': this.request.body.id_movie}).exec();
-    
-    //console.log(result);
-    if (result_movie == null) {
-      this.status = 404;
-    } else {
-
-      //console.log(result_movie.thumbnail);
-      //console.log(result_movie.title);
+      //console.log(this.params.id);
+      var result_score = yield Score.findOne({ 'id_movie': this.request.body.id_movie, 'id_user': this.request.body.id_user }).exec();
       
-      try {
-        var result = new Score({ id_movie: this.request.body.id_movie, 
-                                   id_user: this.request.body.id_user,
-                                   title: result_movie.title,
-                                   thumbnail: result_movie.thumbnail,
-                                   score: this.request.body.score 
-                                 });
-        result = yield result.save();
-        this.status = 200;
-        this.body = result;
-      } catch (error) {
-        console.log(error);
+      //console.log(result_score);
+      if (result_score == null) {
+
+        try {
+          //console.log(this.params.id);
+          var result_movie = yield Movie.findOne({ '_id': this.request.body.id_movie}).exec();
+          
+          //console.log(this.request.body.nbr_index);
+          if (result_movie == null) {
+            this.status = 500;
+            return this.body = 'Can\'t find movie';
+          } else if (result_movie.slug !== slug(this.request.body.response)) {
+            this.status = 400;
+            return this.body = 'Wrong response';
+          } else {
+            
+            try {
+              var nbr_index = this.request.body.nbr_index;
+              var points = 1000 - (this.request.body.nbr_index*200);
+              //console.log(points);
+              var result = new Score({ id_movie: this.request.body.id_movie, 
+                                         id_user: this.request.body.id_user,
+                                         title: result_movie.title,
+                                         thumbnail: result_movie.thumbnail,
+                                         score: points
+                                       });
+              result = yield result.save();
+              this.status = 200;
+              this.body = result;
+            } catch (error) {
+              console.log(error);
+              this.status = 400;
+              return this.body = error.name;
+            } 
+          }
+        } catch (error) {
+          this.status = 404;
+          return this.body = error;
+        }
+
+      } else {
         this.status = 400;
-        return this.body = error.name;
-      } 
-    }
-  } catch (error) {
-    this.status = 404;
-    return this.body = error;
-  }
+        return this.body = 'You have already find this movie';
+      }
+
  
   }
 };

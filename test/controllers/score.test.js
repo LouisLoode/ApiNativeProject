@@ -12,6 +12,7 @@ var randomUUID = faker.random.uuid();
 var randomId = '299687';
 var randomScore = faker.random.number();
 var randomSlug = 'the-5th-wave';
+var randomResponse = 'The 5th Wave';
 var randomImg = faker.image.image();
 
 //var randomIndex_1 = faker.lorem.sentence();
@@ -93,7 +94,8 @@ describe('CRUD Score',function(){
     .send({ 
       id_movie: id_movie, 
       id_user: id_user,
-      score: randomScore
+      response: randomResponse,
+      nbr_index: '0'
     })
     .set('X-app-UUID', randomUUID)
     .set('Content-Type', 'application/json')
