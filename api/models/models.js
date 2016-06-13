@@ -106,7 +106,7 @@ var ScoreSchema = new Schema({
     },
     created: {
         type: Date,
-        default: null
+        default: Date.now
     },
 });
 
