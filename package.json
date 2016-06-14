@@ -54,6 +54,7 @@
     "mongoose": "git://github.com/LearnBoost/mongoose",
     "request": "^2.72.0",
     "restling": "^0.9.1",
+    "shuffle-array": "^1.0.0",
     "simple-array-diff": "^1.1.0",
     "slugify": "^0.1.1",
     "winston": "~2.1.1"
