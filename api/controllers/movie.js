@@ -5,6 +5,7 @@ var https = require('https');
 var Stream = require('stream').Transform;                                
 var fs = require('fs'); 
 var gm = require('gm').subClass({imageMagick: true});   
+var shuffle = require('shuffle-array');
 var path = require('path');
 
 var request = require('koa-request');
@@ -120,6 +121,8 @@ ctrl.state = function *(next){
     var result_user = yield User.find(condition).exec();
     var id_user = result_user[0]._id;
 
+    //console.log(result_user);
+
     try{
       var condition = {'id_user':id_user};
       var result_score = yield Score.find(condition).exec();
@@ -136,10 +139,13 @@ ctrl.state = function *(next){
       };
 
       var result = arrayDiff(all_movies,played_movies);
-
-      return this.body = result.removed;
-    } catch (erro){
-     this.status = 500;
+      //console.log(result.removed);
+      var result_unique = shuffle.pick(result.removed);
+      //console.log('-----------');
+      //console.log(result_unique);
+      return this.body = result_unique;
+    } catch (error){
+     this.status = 400;
     return this.body = error;
     }
   } catch (error) {
