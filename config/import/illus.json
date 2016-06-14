@@ -1,266 +1,447 @@
 [{
 	"id_themoviedb": "1271",
 	"slug": "300",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Director; Zack Snyder",
+	"index_2": "Date; 2006",
+	"index_3": "Quote; This is Spartan"
 }, {
 	"id_themoviedb": "206442",
 	"slug": "a-clockwork-orange",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Director; Stanley Kubrick",
+	"index_2": "Date; 1971",
+	"index_3": "Genres; Drama"
 }, {
 	"id_themoviedb": "28",
 	"slug": "apocalypse-now",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Director; Francis Ford Coppola",
+	"index_2": "Quote; I love napalm",
+	"index_3": "Genres; War"
 }, {
 	"id_themoviedb": "105",
 	"slug": "back-to-the-future",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Charactere; Marty McFly",
+	"index_2": "Director; Robert Zemeckis",
+	"index_3": "Genres; Science Fiction"
 }, {
 	"id_themoviedb": "3170",
 	"slug": "bambi",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Charactere; Young Flower",
+	"index_2": "Productions; Walt Disney Productions",
+	"index_3": "Date; 1942"
 }, {
 	"id_themoviedb": "155",
 	"slug": "batman-the-dark-knight",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Actor; Christian Bale",
+	"index_2": "Director; Christopher Nolan",
+	"index_3": "Charactere; Alfred"
 }, {
 	"id_themoviedb": "49014",
 	"slug": "cosmopolis",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Director; David Cronenberg",
+	"index_2": "Actor; Robert Pattinson",
+	"index_3": "Actress; Sarah Gadon"
 }, {
 	"id_themoviedb": "152532",
 	"slug": "dallas-buyers-club",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Actor; Matthew McConaughey",
+	"index_2": "Genres; History",
+	"index_3": "Director: Jean-Marc Vallée"	
 }, {
 	"id_themoviedb": "293660",
 	"slug": "deadpool",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Director; Tim Miller",
+	"index_2": "Actor; Ryan Reynolds",
+	"index_3": "Productions; Marvel Entertainment"
 }, {
 	"id_themoviedb": "88",
 	"slug": "dirty-dancing",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Director; Emile Ardolino",
+	"index_2": "Genres; Romance",
+	"index_3": "Quotes; Nobody puts Baby in a corner."
 }, {
 	"id_themoviedb": "68718",
 	"slug": "django-unchained",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Director; Quentin Tarantino",
+	"index_2": "Writer; Quentin Tarantino",
+	"index_3": "Actor; Leonardo DiCaprio"
 }, {
 	"id_themoviedb": "141",
 	"slug": "donnie-darko",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Director; Richard Kelly",
+	"index_2": "Actor; Jake Gyllenhaal",
+	"index_3": "Actress; Drew Barrymore"
 }, {
 	"id_themoviedb": "550",
 	"slug": "fight-club",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Actor; Brad Pitt",
+	"index_2": "Date; 1999",
+	"index_3": "Director; David Fincher"
 }, {
 	"id_themoviedb": "13",
 	"slug": "forest-gump",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Actor; Tom Hanks",
+	"index_2": "Genres; Comedy",
+	"index_3": "Actress; Robin Wright"
 }, {
 	"id_themoviedb": "600",
 	"slug": "full-metal-jacket",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Genres; War",
+	"index_2": "Charactere; Animal Mother",
+	"index_3": "Director; Stanley Kubrick"
 }, {
 	"id_themoviedb": "3131",
 	"slug": "gangs-of-new-york",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Director; Martin Scorsese",
+	"index_2": "Actress; Cameron Diaz",
+	"index_3": "Charactere; Bill The Butcher"
 }, {
 	"id_themoviedb": "98",
 	"slug": "gladiator",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Director; Ridley Scott",
+	"index_2": "Genres; Action",
+	"index_3": "Quote; The slave vs the Empire"
 }, {
 	"id_themoviedb": "49047",
 	"slug": "gravity",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Actress; Sandra Bullock",
+	"index_2": "Actor; George Clooney",
+	"index_3": "Director: Alfonso Cuarón"
 }, {
 	"id_themoviedb": "49047",
 	"slug": "gremlins",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Director; Joe Dante",
+	"index_2": "Genres; Fantastic",
+	"index_3": "Quote; Minions. Intelligent. Dangerous."
 }, {
 	"id_themoviedb": "9740",
 	"slug": "hannibal",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Director; Ridley Scott",
+	"index_2": "Actor; Anthony Hopkins",
+	"index_3": "Genres; Thriller"
 }, {
 	"id_themoviedb": "671",
 	"slug": "harry-potter",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Actress; Emma Watson",
+	"index_2": "Writers; J. K. Rowling",
+	"index_3": "Quote; Wingardium Leviosa"
 }, {
 	"id_themoviedb": "10191",
 	"slug": "how-to-train-your-dragon",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Directors;Dean DeBlois, Chris Sanders",
+	"index_2": "Charactere; Hiccup",
+	"index_3": "Genres; Animation"
 }, {
 	"id_themoviedb": "2048",
 	"slug": "i-robot",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Actor; Will Smith",
+	"index_2": "Director; Alex Proyas",
+	"index_3": "Actress; Bridget Moynahan"
 }, {
 	"id_themoviedb": "425",
 	"slug": "ice-age",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Directors; Chris Wedge, Carlos Saldanha",
+	"index_2": "Charactere; Sid",
+	"index_3": "Productions; Blue Sky Studios"
+	
 }, {
 	"id_themoviedb": "27205",
 	"slug": "inception",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Director; Christopher Nolan",
+	"index_2": "Actress; Ellen Page",
+	"index_3": "Actor; Tom Hardy"
 }, {
 	"id_themoviedb": "602",
 	"slug": "independence-day",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Date; 1996",
+	"index_2": "Director; Roland Emmerich",
+	"index_3": "Actor; Will Smith"
 }, {
 	"id_themoviedb": "85",
 	"slug": "indiana-jones",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Director; Steven Spielberg",
+	"index_2": "Actor; Harrison Ford",
+	"index_3": "Actress; Karen Allen"
 }, {
 	"id_themoviedb": "150540",
 	"slug": "inside-out",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Charactere; Joy",
+	"index_2": "Genres; Animation",
+	"index_3": "Charactere; Sadness"
 }, {
 	"id_themoviedb": "578",
 	"slug": "jaws",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Director; Steven Spielberg",
+	"index_2": "Charactere; Ellen Brody",
+	"index_3": "Quote; She was the first ..."
 }, {
 	"id_themoviedb": "278927",
 	"slug": "the-jungle-book",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
-}{
+	"index_1": "Charactere; Baloo",
+	"index_2": "Production Companies; Walt Disney Pictures",
+	"index_3": "Charactere; Mowgli"
+},{
 	"id_themoviedb": "7326",
 	"slug": "juno",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
-}{
+	"index_1": "Genres; Comedy",
+	"index_2": "Date; 2007",
+	"index_3": "Director; Jason Reitman"
+},{
 	"id_themoviedb": "329",
 	"slug": "jurassic-park",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
-}{
+	"index_1": "Actress; Laura Dern",
+	"index_2": "Charactere; Dr. Alan Grant",
+	"index_3": "Director; Steven Spielberg"
+},{
 	"id_themoviedb": "24",
 	"slug": "kill-bill",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
-}{
+	"index_1": "Actress; Uma Thurman",
+	"index_2": "Director; Quentin Tarantino",
+	"index_3": "Actress; Lucy Liu"
+},{
 	"id_themoviedb": "101",
 	"slug": "leon",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
-}{
+	"index_1": "Director; Luc Besson",
+	"index_2": "Charactere; Jean Reno",
+	"index_3": "Actress; Natalie Portman"
+},{
 	"id_themoviedb": "120",
 	"slug": "the-lord-of-ring",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
-}{
+	"index_1": "Writer; J.R.R. Tolkien",
+	"index_2": "Charactere; Aragorn",
+	"index_3": "Genres; Fantastic"
+},{
 	"id_themoviedb": "1830",
 	"slug": "lord-of-war",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
-}{
+	"index_1": "Director; Andrew Niccol",
+	"index_2": "Actor; Nicolas Cage",
+	"index_3": "Actor; Jared Leto"
+},{
 	"id_themoviedb": "77",
 	"slug": "memento",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
-}{
+	"index_1": "Date; 2000",
+	"index_2": "Director; Christopher Nolan",
+	"index_3": "Quote; Tattoo to remember ..."
+},{
 	"id_themoviedb": "607",
 	"slug": "men-in-black",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
-}{
+	"index_1": "Director; Barry Sonnenfeld",
+	"index_2": "Charactere; Agent K",
+	"index_3": "Actor; Will Smith"
+},{
 	"id_themoviedb": "265177",
 	"slug": "mommy",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
-}{
+	"index_1": "Actor; Antoine-Olivier Pilon",
+	"index_2": "Director; Xavier Dolan",
+	"index_3": "Actress; Anne Dorval"
+},{
 	"id_themoviedb": "83666",
 	"slug": "moonrise-kingdom",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
-}{
+	"index_1": "Director; Wes Anderson",
+	"index_2": "Actor; Bruce Willis",
+	"index_3": "Genres; Comedy"
+},{
 	"id_themoviedb": "12",
 	"slug": "finding-nemo",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
-}{
+	"index_1": "Charactere; Dory",
+	"index_2": "Production; Pixar Animation Studios",
+	"index_3": "Date; 2003"
+},{
 	"id_themoviedb": "6977",
 	"slug": "no-country-for-old-men",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
-}{
-	"id_themoviedb": "278927",
-	"slug": "the jungle book",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
-}{
-	"id_themoviedb": "278927",
-	"slug": "the jungle book",
-	"index_1": "Indice 1",
-	"index_2": "Indice 2",
-	"index_3": "Indice 3"
+	"index_1": "Directors; Joel Coen",
+	"index_2": "Actor; Woody Harrelson",
+	"index_3": "Genres; Thriller"
+},{
+	"id_themoviedb": "1427",
+	"slug": "perfume",
+	"index_1": "Director; Tom Tykwer",
+	"index_2": "Actor; Ben Whishaw",
+	"index_3": "Quote; The Story of a Murderer"
+},{
+	"id_themoviedb": "539",
+	"slug": "psycho",
+	"index_1": "Actress; Vera Miles",
+	"index_2": "Date; 1960",
+	"index_3": "Director; Alfred Hitchcock"
+},{
+	"id_themoviedb": "680",
+	"slug": "pulp-fiction",
+	"index_1": "Director; Quentin Tarantino",
+	"index_2": "Actress; Uma Thurman",
+	"index_3": "Actor; John Travolta"
+},{
+	"id_themoviedb": "857",
+	"slug": "saving-private-ryan",
+	"index_1": "Director; Steven Spielberg",
+	"index_2": "Actor; Tom Hanks",
+	"index_3": "Genres; War"
+},{
+	"id_themoviedb": "111",
+	"slug": "scarface",
+	"index_1": "Director; Brian De Palma",
+	"index_2": "Charactere; Tony Montana",
+	"index_3": "Actress; Michelle Pfeiffer"
+},{
+	"id_themoviedb": "807",
+	"slug": "seven",
+	"index_1": "Genres; Thriller",
+	"index_2": "Charactere; Tracy Mills",
+	"index_3": "Director; David Fincher"
+},{
+	"id_themoviedb": "11770",
+	"slug": "shaolin-soccer",
+	"index_1": "Genres; Comedy",
+	"index_2": "Date; 2001",
+	"index_3": "Director; Stephen Chow"
+},{
+	"id_themoviedb": "808",
+	"slug": "shrek",
+	"index_1": "Charactere; Princess Fiona",
+	"index_2": "Actor; Eddie Murphy",
+	"index_3": "Productions; DreamWorks Animation"
+},{
+	"id_themoviedb": "11324",
+	"slug": "shutter-island",
+	"index_1": "Director; Martin Scorsese",
+	"index_2": "Genres; Thriller",
+	"index_3": "Actor; Leonardo DiCaprio"
+},{
+	"id_themoviedb": "1894",
+	"slug": "star-wars ",
+	"index_1": "Actress; Natalie Portman",
+	"index_2": "Charactere; Chancellor Palpatine",
+	"index_3": "Director; George Lucas"
+},{
+	"id_themoviedb": "563",
+	"slug": "starship-troopers",
+	"index_1": "Quote; One goal, Survive!",
+	"index_2": "Actress; Denise Richards",
+	"index_3": "Charactere; Johnny Rico"
+},{
+	"id_themoviedb": "1924",
+	"slug": "superman",
+	"index_1": "Director; Richard Donner",
+	"index_2": "Date; 1978",
+	"index_3": "Actor; Marlon Brando"
+},{
+	"id_themoviedb": "37135",
+	"slug": "tarzan",
+	"index_1": "Directors; Chris Buck, Kevin Lima",
+	"index_2": "Charactere; Jane Porter",
+	"index_3": "Productions; Walt Disney Pictures"
+},{
+	"id_themoviedb": "103",
+	"slug": "taxi-driver",
+	"index_1": "Director; Martin Scorsese",
+	"index_2": "Actor; Robert De Niro",
+	"index_3": "Quote; Do you fuck my wife ?"
+},{
+	"id_themoviedb": "72105",
+	"slug": "ted",
+	"index_1": "Actress; Mila Kunis",
+	"index_2": "Date; 2012",
+	"index_3": "Genres; Comedy"
+},{
+	"id_themoviedb": "24428",
+	"slug": "the-avengers",
+	"index_1": "Director; Joss Whedon",
+	"index_2": "Actor; Robert Downey Jr.",
+	"index_3": "Actress; Scarlett Johansson"
+},{
+	"id_themoviedb": "597",
+	"slug": "titanic",
+	"index_1": "Writer; James Cameron",
+	"index_2": "Actress; Kate Winslet",
+	"index_3": "Genres; Romance"
+},{
+	"id_themoviedb": "744",
+	"slug": "top-gun",
+	"index_1": "Director; Tony Scott",
+	"index_2": "Actor; Tom Cruise",
+	"index_3": "Date; 1986"
+},{
+	"id_themoviedb": "862",
+	"slug": "toy-story",
+	"index_1": "Charactere; Woody",
+	"index_2": "Productions; Pixar Animation Studios",
+	"index_3": "Director; John Lasseter"
+},{
+	"id_themoviedb": "37165",
+	"slug": "the-truman-show",
+	"index_1": "Actor; Jim Carrey",
+	"index_2": "Actress; Natascha McElhone",
+	"index_3": "Genres; Comedy"
+},{
+	"id_themoviedb": "629",
+	"slug": "the-usual-suspects",
+	"index_1": "Actor; Kevin Spacey",
+	"index_2": "Genres; Thriller",
+	"index_3": "Quote; Who is Kazer Sozey"
+},{
+	"id_themoviedb": "10681",
+	"slug": "wall-e",
+	"index_1": "Charactere;  EVE",
+	"index_2": "Productions; Pixar Animation Studios",
+	"index_3": "Genres; Animation"
+},{
+	"id_themoviedb": "856",
+	"slug": "who-framed-roger-rabbit",
+	"index_1": "Date; 1988",
+	"index_2": "Charactere; Eddie Valiant",
+	"index_3": "Charactere; Dolores"
+},{
+	"id_themoviedb": "245775",
+	"slug": "yves-saint-laurent",
+	"index_1": "Actor; Pierre Niney",
+	"index_2": "Actress; Charlotte Le Bon",
+	"index_3": "Date; 2014"
+},{
+	"id_themoviedb": "115",
+	"slug": "the-big-lebowski",
+	"index_1": "Director; Joel Coen",
+	"index_2": "Coktail; White Russian",
+	"index_3": "Charactere; The Dude"
+},{
+	"id_themoviedb": "76493",
+	"slug": "the-dictator",
+	"index_1": "Director; Larry Charles",
+	"index_2": "Quote; Zero Aladdin",
+	"index_3": "Actor; Sacha Baron Cohen"
+},{
+	"id_themoviedb": "64682",
+	"slug": "the-great-gatsby",
+	"index_1": "Director; Baz Luhrmann",
+	"index_2": "Actress; Carey Mulligan",
+	"index_3": "Actor; Leonardo DiCaprio"
+},{
+	"id_themoviedb": "9806",
+	"slug": "the-incredibles",
+	"index_1": "Productions; Pixar Animation Studios",
+	"index_2": "Charactere; Frozone",
+	"index_3": "Quote; Supernatural Powers"
+},{
+	"id_themoviedb": "9654",
+	"slug": "the-italian-job",
+	"index_1": "Actress; Charlize Theron",
+	"index_2": "Date; 2003",
+	"index_3": "Charactere; Charlie Croker"
+},{
+	"id_themoviedb": "45269",
+	"slug": "the-kings-speech",
+	"index_1": "Director; Tom Hooper",
+	"index_2": "Charactere; Queen Elizabeth",
+	"index_3": "Actor; Colin Firth"
+},{
+	"id_themoviedb": "286217",
+	"slug": "the-martian",
+	"index_1": "Director; Ridley Scott",
+	"index_2": "Food: Potatoes",
+	"index_3": "Actor; Matt Damon"
+},{
+	"id_themoviedb": "603",
+	"slug": "the-matrix",
+	"index_1": "Actor; Carrie-Anne Moss",
+	"index_2": "Quote; Believe the unbelievable",
+	"index_3": "Charactere; Neo"
 }
 ]

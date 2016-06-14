@@ -167,18 +167,38 @@ ctrl.get = function *(next, params) {
 ctrl.post = function *(next){
   yield next;
   var error, result;
+  var user_uuid = this.request.get('X-app-UUID');
   //console.log(this.request.body);
-  try {
-    var user_uuid = this.request.get('X-app-UUID');
-    var result = new User({ uuid: user_uuid});
-    result = yield result.save();
-    this.status = 200;
-    this.body = result;
-  } catch (error) {
-    console.log(error);
-    this.status = 400;
-    return this.body = error.name;
-  }  
+    //console.log(this.params.id);
+      try {
+        
+        result = yield User.findOne({ 'uuid': user_uuid}, outputFieldsSecurity).exec();
+        
+        //console.log(result);
+        if (result == null) {
+          try {
+            
+            var result = new User({ uuid: user_uuid});
+            result = yield result.save();
+            this.status = 200;
+            this.body = result;
+          } catch (error) {
+            console.log(error);
+            this.status = 400;
+            return this.body = error.name;
+          }  
+
+
+        }else{
+          this.status = 200;
+          this.body = result;
+        }
+        
+      } catch (error) {
+        console.log(error);
+        this.status = 400;
+        return this.body = error.name;
+      } 
   
 };
 

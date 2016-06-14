@@ -46,6 +46,7 @@ module.exports = function(app, config) {
   router.get('/score/:id', scoreController.get);
   router.post('/score', scoreController.post);
   router.del('/score/:id', scoreController.del);
+  router.del('/score/all/:id', scoreController.delall);
 
 
   app.use(router.middleware());

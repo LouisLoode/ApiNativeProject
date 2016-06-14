@@ -13,6 +13,7 @@ var randomUUID = faker.random.uuid();
 //var randomSlug = faker.name.lastName();
 //var randomImg = faker.image.image();
 
+//console.log(randomUUID);
 
 function request() {
   return supertest(app.listen());

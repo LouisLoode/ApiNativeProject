@@ -16,6 +16,7 @@ var MovieSchema = new Schema({
   title: {
         type: String,
         required: true,
+        unique: true
   },
   illu: {
         type: String,
