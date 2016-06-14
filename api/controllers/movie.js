@@ -135,7 +135,7 @@ ctrl.state = function *(next){
       var result_movie = yield Movie.find('').exec();
       var all_movies = [];
       for (var i = 0; i<result_movie.length; i++) {
-        all_movies[i] = result_movie[i]._id;
+        all_movies[i] = result_movie[i];
       };
 
       var result = arrayDiff(all_movies,played_movies);
