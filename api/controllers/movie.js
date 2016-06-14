@@ -354,138 +354,168 @@ ctrl.get = function *(next, params) {
 ctrl.post = function *(next){
   yield next
   var error, result;
-  //console.log(this.request.body);
-  if (!this.request.body) {
+
+  try {
+    //console.log(this.params.id);
+    result = yield Movie.findOne({ 'id_themoviedb': this.request.body.id_themoviedb}, outputFieldsSecurity).exec();
+    
+    //console.log(result);
+    if (result == null) {
+
+
+     //console.log(this.request.body);
+      if (!this.request.body) {
+        this.status = 400;
+        return this.body = 'The body is empty';
+      }
+      if (!this.request.body.slug) {
+        this.status = 400;
+        return this.body = 'Missing slug';
+      }
+      if (!this.request.body.index_1) {
+        this.status = 400;
+        return this.body = 'Missing index 1';
+      }
+      if (!this.request.body.index_2) {
+        this.status = 400;
+        return this.body = 'Missing index 2';
+      }
+      if (!this.request.body.index_3) {
+        this.status = 400;
+        return this.body = 'Missing index 3';
+      }
+      if (!this.request.body.id_themoviedb) {
+        this.status = 400;
+        return this.body = 'Missing the ID of the movie for themoviedb API';
+      }else{
+        try {
+          var options = { method: 'GET',
+          url: 'https://api.themoviedb.org/3/movie/' + this.request.body.id_themoviedb,
+          qs: { api_key: config.themoviedb.api_key, language: config.themoviedb.language },
+          headers: 
+           {'content-type': 'application/json'} };
+         
+          var response = yield request(options); //Yay, HTTP requests with no callbacks! 
+          var info = JSON.parse(response.body);
+          //console.log(info)
+
+          var options = { method: 'GET',
+          url: 'https://api.themoviedb.org/3/movie/' + this.request.body.id_themoviedb + '/casts',
+          qs: { api_key: config.themoviedb.api_key, language: config.themoviedb.language },
+          headers: 
+           {'content-type': 'application/json'} };
+         
+          var response_cast = yield request(options); //Yay, HTTP requests with no callbacks! 
+          var cast = JSON.parse(response_cast.body);
+
+          var slug_movie = this.request.body.slug;   
+
+          if(info.poster_path !== undefined){                               
+            var ext = info.poster_path.split('.').pop();
+          }
+          //console.log(ext);
+          var url_distant = 'https://image.tmdb.org/t/p/original' + info.poster_path;    
+          var url_tmp = config.pictures.poster_tmp_path + slug_movie + '.' + ext; 
+          var url_cover_local = config.pictures.poster_cover_path + slug_movie + '.' + ext;    
+          var url_thumbnail_local = config.pictures.poster_thumb_path + slug_movie + '.' + ext;  
+          var url_illu = config.pictures.illustration_path + slug_movie + '.png'; 
+          //console.log(url_distant);
+          //console.log(url_cover_local);
+          //console.log(url_thumbnail_local);
+          //console.log(url_illu);
+
+
+           https.request(url_distant, function(response) {                                        
+            var data = new Stream();                                                    
+
+            response.on('data', function(chunk) {                                       
+              data.push(chunk);                                                         
+            });                                                                         
+
+            response.on('end', function() {       
+
+              fs.writeFile('public/' + url_tmp, data.read(), function(err) {
+                  if(err) {
+                      return console.log(err);
+                  }                  
+
+                // Resize cover picture
+                  gm('public/'+url_tmp)
+                    .resize('1000', '563', '^')
+                    .gravity('Center')
+                    .crop('1000', '563')
+                    .write('public/'+url_cover_local, function (err) {
+                      if (err) {
+                        console.log(err);
+                      } else{
+
+                       console.log('Crop Cover -> Done : ' + url_cover_local);
+
+                        gm('public/'+url_tmp)
+                          .resize('150', '225', '^')
+                          .write('public/'+url_thumbnail_local, function (err) {
+                            if (err) {
+                              console.log(err);
+                            } else{
+                             console.log('Crop Thumbnail -> Done : '+url_thumbnail_local);
+                             
+                            }
+                          });  
+                      }
+                  });                   
+                }); 
+            });                                                                         
+          }).end();
+   
+          var result = new Movie({ id_themoviedb: this.request.body.id_themoviedb, 
+                                     slug: this.request.body.slug,
+                                     title: info.original_title,
+                                     overview: info.overview,
+                                     genres: info.genres,
+                                     budget: info.budget,
+                                     revenue: info.revenue,
+                                     release_date: info.release_date,
+                                     index_1: this.request.body.index_1,
+                                     index_2: this.request.body.index_2,
+                                     index_3: this.request.body.index_3,
+                                     illu: config.app.url + '/assets/' + url_illu,
+                                     cover: config.app.url + '/assets/' + url_cover_local,
+                                     thumbnail: config.app.url + '/assets/' + url_thumbnail_local,
+                                     crew: cast.crew,
+                                     cast: cast.cast
+                                   });
+          result = yield result.save();
+          this.status = 200;
+          this.body = result;
+        } catch (error) {
+          console.log(error);
+          this.status = 400;
+          return this.body = error.name;
+        }  
+      }
+
+
+
+
+
+    } else {
+
+      //console.log(final);
+      
     this.status = 400;
-    return this.body = 'The body is empty';
-  }
-  if (!this.request.body.slug) {
+    //console.log('Movie already exist');
+    return this.body = 'Movie already exist';
+    }
+  } catch (error) {
     this.status = 400;
-    return this.body = 'Missing slug';
+    return this.body = 'User already exist';
   }
-  if (!this.request.body.index_1) {
-    this.status = 400;
-    return this.body = 'Missing index 1';
-  }
-  if (!this.request.body.index_2) {
-    this.status = 400;
-    return this.body = 'Missing index 2';
-  }
-  if (!this.request.body.index_3) {
-    this.status = 400;
-    return this.body = 'Missing index 3';
-  }
-  if (!this.request.body.id_themoviedb) {
-    this.status = 400;
-    return this.body = 'Missing the ID of the movie for themoviedb API';
-  }else{
-    try {
-
-      var options = { method: 'GET',
-      url: 'https://api.themoviedb.org/3/movie/' + this.request.body.id_themoviedb,
-      qs: { api_key: config.themoviedb.api_key, language: config.themoviedb.language },
-      headers: 
-       {'content-type': 'application/json'} };
-     
-      var response = yield request(options); //Yay, HTTP requests with no callbacks! 
-      var info = JSON.parse(response.body);
-      //console.log(info)
-
-      var options = { method: 'GET',
-      url: 'https://api.themoviedb.org/3/movie/' + this.request.body.id_themoviedb + '/casts',
-      qs: { api_key: config.themoviedb.api_key, language: config.themoviedb.language },
-      headers: 
-       {'content-type': 'application/json'} };
-     
-      var response_cast = yield request(options); //Yay, HTTP requests with no callbacks! 
-      var cast = JSON.parse(response_cast.body);
 
 
-      var slug_movie = this.request.body.slug;                                      
-      var ext = info.poster_path.split('.').pop();
-      //console.log(ext);
-      var url_distant = 'https://image.tmdb.org/t/p/original' + info.poster_path;    
-      var url_tmp = config.pictures.poster_tmp_path + slug_movie + '.' + ext; 
-      var url_cover_local = config.pictures.poster_cover_path + slug_movie + '.' + ext;    
-      var url_thumbnail_local = config.pictures.poster_thumb_path + slug_movie + '.' + ext;  
-      var url_illu = config.pictures.illustration_path + slug_movie + '.png'; 
-      //console.log(url_distant);
-      //console.log(url_cover_local);
-      //console.log(url_thumbnail_local);
-      //console.log(url_illu);
-
-  // Absolutly not good
-  //if (config.app.env !== 'test') {
+ 
 
 
-       https.request(url_distant, function(response) {                                        
-        var data = new Stream();                                                    
 
-        response.on('data', function(chunk) {                                       
-          data.push(chunk);                                                         
-        });                                                                         
-
-        response.on('end', function() {       
-
-          fs.writeFile('public/'+url_tmp, data.read(), function(err) {
-              if(err) {
-                  return console.log(err);
-              }                  
-
-            // Resize cover picture
-              gm('public/'+url_tmp)
-                .resize('1000', '563', '^')
-                .gravity('Center')
-                .crop('1000', '563')
-                .write('public/'+url_cover_local, function (err) {
-                  if (err) {
-                    console.log(err);
-                  } else{
-
-                   console.log('Crop Cover -> Done : ' + url_cover_local);
-
-                    gm('public/'+url_tmp)
-                      .resize('150', '225', '^')
-                      .write('public/'+url_thumbnail_local, function (err) {
-                        if (err) {
-                          console.log(err);
-                        } else{
-                         console.log('Crop Thumbnail -> Done : '+url_thumbnail_local);
-                         
-                        }
-                      });  
-                  }
-              });                   
-            }); 
-        });                                                                         
-      }).end();
-//}
-      var result = new Movie({ id_themoviedb: this.request.body.id_themoviedb, 
-                                 slug: this.request.body.slug,
-                                 title: info.original_title,
-                                 overview: info.overview,
-                                 genres: info.genres,
-                                 budget: info.budget,
-                                 revenue: info.revenue,
-                                 release_date: info.release_date,
-                                 index_1: this.request.body.index_1,
-                                 index_2: this.request.body.index_2,
-                                 index_3: this.request.body.index_3,
-                                 illu: config.app.url + '/assets/' + url_illu,
-                                 cover: config.app.url + '/assets/' + url_cover_local,
-                                 thumbnail: config.app.url + '/assets/' + url_thumbnail_local,
-                                 crew: cast.crew,
-                                 cast: cast.cast
-                               });
-      result = yield result.save();
-      this.status = 200;
-      this.body = result;
-    } catch (error) {
-      console.log(error);
-      this.status = 400;
-      return this.body = error.name;
-    }  
-  }
 };
 
 

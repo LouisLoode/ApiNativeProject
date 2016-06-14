@@ -279,3 +279,39 @@ ctrl.del = function *(next, params){
     return this.body = error;
   }
 };
+
+/**
+ * @api {del} /api/score/all/:id Delete all scores for an user
+ * @apiName DeleteAllScores
+ * @apiGroup Scores
+ * @apiVersion 0.1.0
+ *
+ * @apiParam {String} id  Id of the user.
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *      {
+ *        "meta": {
+ *          "ok": true,
+ *          "code": 200,
+ *          "version": "0.0.1",
+ *          "now": "2016-05-08T17:04:22.926Z"
+ *        },
+ *        "data": {
+ *          "ok": 1,
+ *          "n": 1
+ *        }
+ *      }
+ *
+ */
+ctrl.delall = function *(next, params){
+  yield next;
+  var error, result;
+  try {
+    result = yield Score.remove({ id_user: this.params.id }).exec();
+    return this.body = result;
+  } catch (error) {
+    this.status = 400;
+    return this.body = error;
+  }
+};
