@@ -230,6 +230,63 @@ ctrl.list = function *(next){
   }
 };
 
+/**
+ * @api {get} /api/movie/:id/cast Get cast of one movie
+ * @apiName ShowMovieCast
+ * @apiGroup Movies
+ * @apiVersion 0.1.0
+ *
+ * @apiParam {String} id  Id of the movie.
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *      {
+ *        "meta": {
+ *          "ok": true,
+ *          "code": 200,
+ *          "version": "0.0.1",
+ *          "now": "2016-05-08T17:04:22.926Z"
+ *        },
+ *        "data": {
+ *          "cast": "cast.cast",
+ *        }
+ *      }
+ *
+ * @apiErrorExample {json} Error-Response
+ *     HTTP/1.1 404 Not Found
+ *      {
+ *        "meta": {
+ *          "ok": false,
+ *          "code": 404,
+ *          "message": "Not found",
+ *          "version": "0.0.1",
+ *          "now": "2016-05-08T17:04:22.926Z"
+ *        }
+ *      }
+ *
+ */
+ctrl.getCast = function *(next, params) {
+  yield next;
+  var error, result;
+  try {
+    //console.log(this.params.id);
+    result = yield Movie.findOne({ '_id': this.params.id}, outputFieldsSecurity).exec();
+    
+    //console.log(result);
+    if (result == null) {
+      this.status = 404;
+    } else {
+
+      //console.log(final);
+      
+      this.status = 200;
+      return this.body = result.cast;
+    }
+  } catch (error) {
+    this.status = 404;
+    return this.body = error;
+  }
+};
 
 /**
  * @api {get} /api/movie/:id Get one movie
