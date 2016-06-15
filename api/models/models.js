@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var random = require('mongoose-random');
 var Schema = mongoose.Schema;
 
 // set up a mongoose model
@@ -81,6 +82,8 @@ var MovieSchema = new Schema({
         default: null
     },
 });
+
+MovieSchema.plugin(random, { path: 'r' });
 
 // set up a mongoose model
 var ScoreSchema = new Schema({

@@ -12,6 +12,7 @@ var helmet = require('koa-helmet');
 //var serve   = require('koa-static');
 var ip = require('koa-ip');
 var genres = require('../api/utils/responses');
+var timeout = require('koa-timeout')(5000);
 
 module.exports = function(app, config) {
   //if (!config.app.keys) { throw new Error('Please add session secret key in the config file!'); }
@@ -25,6 +26,8 @@ module.exports = function(app, config) {
      whiteList: config.whitelist,
      blackList: config.blacklist
   }));
+
+  app.use(timeout);
 
   app.use(helmet());
 
