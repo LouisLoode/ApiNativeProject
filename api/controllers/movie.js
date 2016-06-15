@@ -164,7 +164,7 @@ ctrl.state = function *(next){
  * @apiDescription Get all documents, or documents that match the query. 
  * You can use mongoose find conditions, limit, skip and sort.
  * For example: 
- * /api/users?conditions={"name":"john"}&limit=10&skip=1&sort=-zipcode
+ * /api/movies?conditions={"name":"john"}&limit=10&skip=1&sort=-zipcode
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -309,6 +309,91 @@ ctrl.get = function *(next, params) {
 };
 
 
+/**
+ * @api {get} /api/movie/:id/related Get related movies of one movie
+ * @apiName ShowRelatedMovies
+ * @apiGroup Movies
+ * @apiVersion 0.1.0
+ *
+ * @apiParam {String} id  Id of the movie.
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *      {
+ *        "meta": {
+ *          "ok": true,
+ *          "code": 200,
+ *          "version": "0.0.1",
+ *          "now": "2016-05-08T17:04:22.926Z"
+ *        },
+ *        "data": {
+ *          "id_themoviedb": "23383",
+ *          "slug": "hamlet",
+ *          "_id": "5731d3fb8d476abe2445b03d",
+ *          "slug": "",
+ *          "title": "info.original_title",
+ *          "overview": "info.overview",
+ *          "genres": "info.genres",
+ *          "budget": "info.budget",
+ *          "revenue": "info.revenue",
+ *          "release_date": "info.release_date",
+ *          "index_1": "this.request.body.index_1",
+ *          "index_2": "this.request.body.index_2",
+ *          "index_3": "this.request.body.index_3",
+ *          "illu": "config.app.url + '/' + url_illu",
+ *          "cover": "config.app.url + '/' + url_cover_local",
+ *          "thumbnail": "config.app.url + '/' + url_thumbnail_local",
+ *          "crew": "cast.crew",
+ *          "cast": "cast.cast",
+ *          "created": "2016-05-08T17:04:22.923Z"
+ *          "updated": "2016-05-08T17:04:22.923Z"
+ *        }
+ *      }
+ *
+ * @apiErrorExample {json} Error-Response
+ *     HTTP/1.1 404 Not Found
+ *      {
+ *        "meta": {
+ *          "ok": false,
+ *          "code": 404,
+ *          "message": "Not found",
+ *          "version": "0.0.1",
+ *          "now": "2016-05-08T17:04:22.926Z"
+ *        }
+ *      }
+ *
+ */
+ctrl.related = function *(next, params) {
+  yield next;
+  var error, result_movie;
+    //console.log(result_user);
+
+    try{
+
+      var result_movie = yield Movie.find('').exec();
+      //console.log(result_movie);
+      var all_movies = [];
+      for (var i = 0; i<result_movie.length; i++) {
+        all_movies[i] = result_movie[i];
+      };
+
+      shuffle(all_movies);
+      var final = [];
+      for (var i=0; i<10; i++) {
+         final[i] = all_movies[i];
+      }
+
+
+      //console.log(final);
+      this.status = 200;
+      return this.body = final;
+    } catch (error){
+     this.status = 400;
+    return this.body = error;
+    }
+};
+
+
  /**
  * @api {post} /api/movie Post a movie
  * @apiName AddMovie
@@ -367,8 +452,6 @@ ctrl.post = function *(next){
     
     //console.log(result);
     if (result == null) {
-
-
      //console.log(this.request.body);
       if (!this.request.body) {
         this.status = 400;
@@ -413,7 +496,7 @@ ctrl.post = function *(next){
          
           var response_cast = yield request(options); //Yay, HTTP requests with no callbacks! 
           var cast = JSON.parse(response_cast.body);
-
+          //console.log(cast);
           var slug_movie = this.request.body.slug;   
 
           if(info.poster_path !== undefined){                               
@@ -499,10 +582,6 @@ ctrl.post = function *(next){
           return this.body = error.name;
         }  
       }
-
-
-
-
 
     } else {
 

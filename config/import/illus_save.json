@@ -45,7 +45,7 @@
 	"slug": "dallas-buyers-club",
 	"index_1": "Actor; Matthew McConaughey",
 	"index_2": "Genres; History",
-	"index_3": "Director: Jean-Marc Vallée"	
+	"index_3": "Director; Jean-Marc Vallée"	
 }, {
 	"id_themoviedb": "293660",
 	"slug": "deadpool",
@@ -127,7 +127,7 @@
 }, {
 	"id_themoviedb": "10191",
 	"slug": "how-to-train-your-dragon",
-	"index_1": "Directors;Dean DeBlois, Chris Sanders",
+	"index_1": "Directors; Dean DeBlois, Chris Sanders",
 	"index_2": "Charactere; Hiccup",
 	"index_3": "Genres; Animation"
 }, {
@@ -288,12 +288,6 @@
 	"index_2": "Charactere; Tracy Mills",
 	"index_3": "Director; David Fincher"
 },{
-	"id_themoviedb": "11770",
-	"slug": "shaolin-soccer",
-	"index_1": "Genres; Comedy",
-	"index_2": "Date; 2001",
-	"index_3": "Director; Stephen Chow"
-},{
 	"id_themoviedb": "808",
 	"slug": "shrek",
 	"index_1": "Charactere; Princess Fiona",
@@ -307,7 +301,7 @@
 	"index_3": "Actor; Leonardo DiCaprio"
 },{
 	"id_themoviedb": "1894",
-	"slug": "star-wars ",
+	"slug": "star-wars",
 	"index_1": "Actress; Natalie Portman",
 	"index_2": "Charactere; Chancellor Palpatine",
 	"index_3": "Director; George Lucas"

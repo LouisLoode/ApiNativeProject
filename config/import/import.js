@@ -43,9 +43,6 @@ console.log(jsonContent[i].index_3);*/
 	var index_2 = jsonContent[i].index_2;
 	var index_3 = jsonContent[i].index_3;
 	//console.log(i);
-	if(i === 39 || i === 78){
-		//console.log('Sleep for conturn TheMovieDB MAX_REQUEST_PER_SEC')
-		sleep(5000).then(
 
 			rest.post('http://' + config.app.server + ':' + config.app.port + '/api/movie' , {
 			  data: { id_themoviedb: id_themoviedb,
@@ -64,32 +61,5 @@ console.log(jsonContent[i].index_3);*/
 			  console.log(err + ' -> Error !');
 			})
 
-		);
-
-
-	}else{
-
-		sleep(5000).then(
-
-			rest.post('http://' + config.app.server + ':' + config.app.port + '/api/movie' , {
-			  data: { id_themoviedb: id_themoviedb,
-					  slug: slug,
-					  index_1: index_1,
-					  index_2: index_2,
-					  index_3: index_3 },
-			  timeout: 25000
-			}).then(function(result) {
-			  if (result.response.statusCode == 200) {
-			    //result.data;// you can get at the raw response like this... 
-			    //console.log(result.data.data.title);
-			    console.log(result.data.data.title + ' -> Done !')
-			  }
-			},function(err) {
-			  console.log(err + ' -> Error !');
-			})
-
-		);
-
-	}
 
 };

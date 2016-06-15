@@ -31,6 +31,7 @@ module.exports = function(app, config) {
   router.get('/movies/state', movieController.state);
   router.get('/movies/success', movieController.success);
   router.get('/movie/:id', movieController.get);
+  router.get('/movie/:id/related', movieController.related);
   router.post('/movie', movieController.post);
   router.put('/movie/:id', movieController.put);
   router.del('/movie/:id', movieController.del);
