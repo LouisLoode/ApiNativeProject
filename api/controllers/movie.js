@@ -111,7 +111,7 @@ ctrl.success = function *(next){
  *        "data": ['575614197a0775750d64071e','575614197a0775750d64071d']
  *      }
  */
-/*ctrl.state = function *(next){
+ctrl.state = function *(next){
   yield next;
   var error, result_user, result_movie, result_score;
   var user_uuid = this.request.get('X-app-UUID');
@@ -153,9 +153,9 @@ ctrl.success = function *(next){
     return this.body = error;
   }
 };
-*/
 
-ctrl.state = function *(next){
+
+/*ctrl.state = function *(next){
   yield next;
   var error, result_user, result_movie, result_score;
   var user_uuid = this.request.get('X-app-UUID');
@@ -176,7 +176,7 @@ ctrl.state = function *(next){
       return this.body = error;
     }
 
-    /*try{
+    try{
       var condition = {'id_user':id_user};
       var result_score = yield Score.find(condition).exec();
 
@@ -200,12 +200,12 @@ ctrl.state = function *(next){
     } catch (error){
      this.status = 400;
     return this.body = error;
-    }*/
+    }
   } catch (error) {
      this.status = 500;
     return this.body = error;
   }
-};
+};*/
 
 /**
  * @api {get} /api/movies/ Get all the movies
