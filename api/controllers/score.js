@@ -218,6 +218,7 @@ ctrl.post = function *(next){
                                          id_user: this.request.body.id_user,
                                          title: result_movie.title,
                                          thumbnail: result_movie.thumbnail,
+                                         release_date: result_movie.release_date,
                                          score: points
                                        });
               result = yield result.save();

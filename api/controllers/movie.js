@@ -629,7 +629,7 @@ ctrl.post = function *(next){
          
           var response_cast = yield request(options); //Yay, HTTP requests with no callbacks! 
           var cast = JSON.parse(response_cast.body);
-          //console.log(cast);
+          console.log(cast);
           var casting = [];
           for (var i = 0; i < 20; i++) {
                casting[i] = cast.cast[i];
