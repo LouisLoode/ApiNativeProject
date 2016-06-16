@@ -21,7 +21,7 @@ var Score = mongoose.model('Score');
 
 var ctrl = module.exports = {};
 
-var outputFieldsSecurity = 'title overview slug id_themoviedb overview genres budget revenue release_date index_1 index_2 index_3 illu cover thumbnail created updated cast crew';
+var outputFieldsSecurity = 'title slug id_themoviedb overview genres budget revenue release_date index_1 index_2 index_3 illu cover thumbnail created updated cast crew';
 var outputFieldsSecurityScores = 'id_movie id_user title thumbnail score created';
 
 function cleanArray(actual) {
@@ -111,7 +111,7 @@ ctrl.success = function *(next){
  *        "data": ['575614197a0775750d64071e','575614197a0775750d64071d']
  *      }
  */
-ctrl.state = function *(next){
+/*ctrl.state = function *(next){
   yield next;
   var error, result_user, result_movie, result_score;
   var user_uuid = this.request.get('X-app-UUID');
@@ -153,8 +153,8 @@ ctrl.state = function *(next){
     return this.body = error;
   }
 };
+*/
 
-/*
 ctrl.state = function *(next){
   yield next;
   var error, result_user, result_movie, result_score;
@@ -172,10 +172,11 @@ ctrl.state = function *(next){
       var result_score = yield Score.find(condition).exec();
       console.log(result_score);
     } catch(error){
-
+      this.status = 500;
+      return this.body = error;
     }
 
-    try{
+    /*try{
       var condition = {'id_user':id_user};
       var result_score = yield Score.find(condition).exec();
 
@@ -199,12 +200,12 @@ ctrl.state = function *(next){
     } catch (error){
      this.status = 400;
     return this.body = error;
-    }
+    }*/
   } catch (error) {
      this.status = 500;
     return this.body = error;
   }
-};*/
+};
 
 /**
  * @api {get} /api/movies/ Get all the movies
