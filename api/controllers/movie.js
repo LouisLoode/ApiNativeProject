@@ -21,7 +21,7 @@ var Score = mongoose.model('Score');
 
 var ctrl = module.exports = {};
 
-var outputFieldsSecurity = 'title slug id_themoviedb overview genres budget revenue release_date index_1 index_2 index_3 illu cover thumbnail created updated cast crew';
+var outputFieldsSecurity = 'title overview slug id_themoviedb overview genres budget revenue release_date index_1 index_2 index_3 illu cover thumbnail created updated cast crew';
 var outputFieldsSecurityScores = 'id_movie id_user title thumbnail score created';
 
 function cleanArray(actual) {
@@ -154,6 +154,57 @@ ctrl.state = function *(next){
   }
 };
 
+/*
+ctrl.state = function *(next){
+  yield next;
+  var error, result_user, result_movie, result_score;
+  var user_uuid = this.request.get('X-app-UUID');
+  var condition = {'uuid':user_uuid};
+
+  try {
+    var result_user = yield User.find(condition).exec();
+    var id_user = result_user[0]._id;
+
+    console.log(id_user);
+
+    try {
+      var condition = {'id_user':id_user};
+      var result_score = yield Score.find(condition).exec();
+      console.log(result_score);
+    } catch(error){
+
+    }
+
+    try{
+      var condition = {'id_user':id_user};
+      var result_score = yield Score.find(condition).exec();
+
+      var played_movies = [];
+      for (var i = 0; i<result_score.length; i++) {
+        played_movies[i] = result_score[i].id_movie;
+      };
+
+      var result_movie = yield Movie.find('').exec();
+      var all_movies = [];
+      for (var i = 0; i<result_movie.length; i++) {
+        all_movies[i] = result_movie[i];
+      };
+
+      var result = arrayDiff(all_movies,played_movies);
+      //console.log(result.removed);
+      var result_unique = shuffle.pick(result.removed);
+      //console.log('-----------');
+      //console.log(result_unique);
+      return this.body = result_unique;
+    } catch (error){
+     this.status = 400;
+    return this.body = error;
+    }
+  } catch (error) {
+     this.status = 500;
+    return this.body = error;
+  }
+};*/
 
 /**
  * @api {get} /api/movies/ Get all the movies
@@ -612,7 +663,8 @@ ctrl.post = function *(next){
                 }); 
             });                                                                         
           }).end();
-   
+          
+          console.log(info.overview);
           var result = new Movie({ id_themoviedb: this.request.body.id_themoviedb, 
                                      slug: this.request.body.slug,
                                      title: info.original_title,
