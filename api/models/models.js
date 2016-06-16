@@ -104,9 +104,12 @@ var ScoreSchema = new Schema({
           required: true
     },  
     score: {
-        type: Number,
+        type: String,
         required: true,
         default: null
+    },
+    release_date: {
+        type: Date
     },
     created: {
         type: Date,

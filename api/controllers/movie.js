@@ -111,7 +111,7 @@ ctrl.success = function *(next){
  *        "data": ['575614197a0775750d64071e','575614197a0775750d64071d']
  *      }
  */
-ctrl.state = function *(next){
+/*ctrl.state = function *(next){
   yield next;
   var error, result_user, result_movie, result_score;
   var user_uuid = this.request.get('X-app-UUID');
@@ -152,10 +152,10 @@ ctrl.state = function *(next){
      this.status = 500;
     return this.body = error;
   }
-};
+};*/
 
 
-/*ctrl.state = function *(next){
+ctrl.state = function *(next){
   yield next;
   var error, result_user, result_movie, result_score;
   var user_uuid = this.request.get('X-app-UUID');
@@ -171,41 +171,65 @@ ctrl.state = function *(next){
       var condition = {'id_user':id_user};
       var result_score = yield Score.find(condition).exec();
       console.log(result_score);
-    } catch(error){
-      this.status = 500;
-      return this.body = error;
-    }
-
-    try{
-      var condition = {'id_user':id_user};
-      var result_score = yield Score.find(condition).exec();
 
       var played_movies = [];
       for (var i = 0; i<result_score.length; i++) {
         played_movies[i] = result_score[i].id_movie;
       };
 
-      var result_movie = yield Movie.find('').exec();
-      var all_movies = [];
-      for (var i = 0; i<result_movie.length; i++) {
-        all_movies[i] = result_movie[i];
-      };
+        try{
+          var result_movie = yield Movie.find('').exec();
+          var all_movies = [];
+          for (var i = 0; i<result_movie.length; i++) {
+            all_movies[i] = result_movie[i]._id;
+          };
 
-      var result = arrayDiff(all_movies,played_movies);
-      //console.log(result.removed);
-      var result_unique = shuffle.pick(result.removed);
-      //console.log('-----------');
-      //console.log(result_unique);
-      return this.body = result_unique;
-    } catch (error){
-     this.status = 400;
-    return this.body = error;
+          var result = arrayDiff(all_movies,played_movies);
+          //console.log(result.removed);
+          var result_unique = shuffle.pick(result.removed);
+          //console.log('-----------');
+          console.log(result_unique);
+
+
+           try {
+            //console.log(this.params.id);
+            result = yield Movie.findOne({ '_id': result_unique}, outputFieldsSecurity).exec();
+            
+            //console.log(result);
+            if (result == null) {
+              this.status = 400;
+              return this.body = 'Can\'t find any unplayed movies';
+            } else {
+
+              //console.log(final);
+              
+              this.status = 200;
+              return this.body = result;
+            }
+          } catch (error) {
+            this.status = 404;
+            return this.body = error;
+          }
+
+        } catch (error){
+         this.status = 400;
+        return this.body = error;
+        }
+
+
+
+
+    } catch(error){
+      this.status = 500;
+      return this.body = error;
     }
+
+
   } catch (error) {
      this.status = 500;
     return this.body = error;
   }
-};*/
+};
 
 /**
  * @api {get} /api/movies/ Get all the movies
@@ -605,7 +629,14 @@ ctrl.post = function *(next){
          
           var response_cast = yield request(options); //Yay, HTTP requests with no callbacks! 
           var cast = JSON.parse(response_cast.body);
-          //console.log(cast);
+          console.log(cast);
+          var casting = [];
+          for (var i = 0; i < 20; i++) {
+               casting[i] = cast.cast[i];
+          }
+
+
+            console.log(casting);
           var slug_movie = this.request.body.slug;   
 
           if(info.poster_path !== undefined){                               
@@ -681,7 +712,7 @@ ctrl.post = function *(next){
                                      cover: config.app.url + '/assets/' + url_cover_local,
                                      thumbnail: config.app.url + '/assets/' + url_thumbnail_local,
                                      crew: cast.crew,
-                                     cast: cast.cast
+                                     cast: casting
                                    });
           result = yield result.save();
           this.status = 200;
